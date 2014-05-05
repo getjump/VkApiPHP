@@ -24,6 +24,7 @@ class Error {
         $this->error_msg = $error->error_msg;
         $this->error_code = $error->error_code;
         $this->request_params = $error->request_params;
+        throw new \Exception($error->error_msg, $error->error_code);
     }
 
     public function getCode() {
