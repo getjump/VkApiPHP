@@ -29,8 +29,8 @@ class RequestTransaction {
     /**
      * @param $methodName
      * @param bool $args
+     * @param bool $accessToken
      * @param bool $callback
-     * @return Response
      */
     public function __construct($methodName, $args = false, $accessToken = false, $callback = false)
     {
@@ -87,7 +87,7 @@ class RequestTransaction {
 
         if($this->accessToken) $args['access_token'] = $this->accessToken;
 
-        $c = new ApiResponse($this->guzzle->post('https://api.vk.com/method/'.$this->methodName, ['body' => $args])->json(['object' => true]), $this->callback);
+        $c = new Response\Api($this->guzzle->post('https://api.vk.com/method/'.$this->methodName, ['body' => $args])->json(['object' => true]), $this->callback);
         //$c = new ApiResponse(json_decode(file_get_contents('https://api.vk.com/method/'.$this->methodName.'?'.$query)), $this->callback);
         return $c;
     }

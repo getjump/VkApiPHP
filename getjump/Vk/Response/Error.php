@@ -6,10 +6,10 @@
  * Time: 16:19
  */
 
-namespace getjump\Vk;
+namespace getjump\Vk\Response;
 
 
-class ErrorResponse {
+class Error {
 
     public $error_msg;
     public $error_code;

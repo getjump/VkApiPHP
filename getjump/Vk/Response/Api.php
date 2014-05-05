@@ -1,25 +1,28 @@
 <?php
-namespace getjump\Vk;
+namespace getjump\Vk\Response;
 
 
-class ApiResponse {
+class Api {
     /**
      * @var Response
      */
     public $response = false;
     /**
-     * @var bool|ErrorResponse
+     * @var bool|Error
      */
     public $error = false;
 
     public function __construct($data, $callback = false) {
         $this->response = !isset($data->response) ? false : new Response($data->response, $callback);
-        $this->error = !isset($data->error) ? false : new ErrorResponse($data->error);
+        $this->error = !isset($data->error) ? false : new Error($data->error);
     }
 
+    /**
+     * @param bool|callable $callback
+     */
     public function each($callback = false)
     {
-        return $this->response->each($callback);
+        $this->response->each($callback);
     }
 
     public function getResponse() {

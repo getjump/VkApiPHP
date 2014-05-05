@@ -37,9 +37,9 @@ class Core
     }
 
     /**
-     * @param $methodName
-     * @param bool $args
-     * @return ApiResponse|RequestTransaction
+     * @param string $methodName
+     * @param bool|array $args
+     * @return Response\Api|RequestTransaction
      */
     public function request($methodName, $args = false) {
         if($args) $this->params($args);

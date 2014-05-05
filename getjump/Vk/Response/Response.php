@@ -6,7 +6,7 @@
  * Time: 16:25
  */
 
-namespace getjump\Vk;
+namespace getjump\Vk\Response;
 
 
 class Response {

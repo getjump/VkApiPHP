@@ -8,7 +8,6 @@
 
 namespace getjump\Vk;
 
-
 class VkJs {
 
     /**
@@ -25,7 +24,12 @@ class VkJs {
 
     private $callback = false;
 
-    public function __construct($methodName, $args = false, \getjump\Vk\Core $vk)
+    /**
+     * @param $methodName
+     * @param bool|array $args
+     * @param Core $vk
+     */
+    public function __construct($methodName, $args = false, Core $vk)
     {
         $arg = [];
         if($args)
@@ -35,7 +39,7 @@ class VkJs {
                 $arg[] = sprintf('"%s" : "%s"', $k, $v);
             }
         }
-        if($vk instanceof \getjump\Vk\Core)
+        if($vk instanceof Core)
         {
             $this->vk = $vk;
         }
@@ -61,7 +65,7 @@ class VkJs {
                     function($data) use(&$oldCallback){
                         $std = new \stdClass();
                         $std->response = $data;
-                        return new ApiResponse($std, $oldCallback);
+                        return new Response\Api($std, $oldCallback);
                     };
                 $this->vk->createAs($this->callback);
             }
