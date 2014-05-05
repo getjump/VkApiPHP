@@ -13,18 +13,21 @@ I WILL SHOW WHAT YOU CAN DO WITH THIS STUFF
 
 OKAY, THAT IS HOW WE CAN INSTANTIATE MAIN OBJECT FOR OUR FUTURE REQUESTS
 
-YOU CAN GET SOME TOKENS AT : 
-
-http://oauth.vk.com/authorize?client_id=3470411&scope=messages,photos,groups,status,wall,offline&redirect_uri=blank.html&display=page&v=5.5&response_type=token
-
-I CAN'T STEAL THEM, SINCE IT'S VK SIDE STUFF GUYS, SCOPE MEANS WHAT RIGHTS YOU NEEDED FOR, I RECOMMEND AS MUCH AS YOU CAN, IF YOU DON'T WANT PROBLEMS.
-
 ```php
 $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR TOKENS GOES <<<);
 ```
- 
- 
-I ALREADY DID SOME WRAPPERS JUST FOR YOU, IF YOU WANNA MORE, PLEASE DO AND PULL REQUEST
+
+>YOU CAN GET SOME TOKENS AT : 
+>http://oauth.vk.com/authorize?client_id=3470411&scope=messages,photos,groups,status,wall,offline&redirect_uri=blank.html&display=page&v=5.5&response_type=token
+>I CAN'T STEAL THEM, SINCE IT'S VK SIDE STUFF GUYS, SCOPE MEANS WHAT RIGHTS YOU NEEDED FOR, I RECOMMEND AS MUCH AS YOU CAN, IF YOU DON'T WANT PROBLEMS.
+
+
+
+I ALREADY DID SOME WRAPPERS JUST FOR YOU, IF YOU WANNA MORE, PLEASE DO AND PULL REQUEST BUT YOU STILL CAN DON'T USE THEM, OR USE SOMETHING LIKE THIS.
+
+```php
+$vk->request('friends.get', ['user_id' => '15157875'])->each(function($i, $v) {});
+```
 
 THAT IS LONG POLLING SHIET, IT WORKS LIKE A HELL, AS FAST AS YOU CAN SEE.
 ```php
