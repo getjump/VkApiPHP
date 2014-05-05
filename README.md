@@ -27,7 +27,7 @@ IF YOU WANNA USE SITE AUTHORIZATION, LOOK AT NEXT SNIPPET:
 $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5');
 
 $auth = getjump\Vk\Auth::getInstance();
-$auth->setAppId('3470411')->setScope('')->setSecret('73317331')->setRedirectUri('http://localhost/test.php'); // SETTING ENV
+$auth->setAppId('3470411')->setScope('SCOPE')->setSecret('SECRET CODE')->setRedirectUri('http://localhost/test.php'); // SETTING ENV
 $token=$auth->startCallback(); //HERE WE WILL HAVE TOKEN, IF EVERYTHING okay
 
 printf("<a href='%s' target='_top'>LINK</a>", $auth->getUrl());
