@@ -21,7 +21,24 @@ $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR 
 >http://oauth.vk.com/authorize?client_id=3470411&scope=messages,photos,groups,status,wall,offline&redirect_uri=blank.html&display=page&v=5.5&response_type=token
 >I CAN'T STEAL THEM, SINCE IT'S VK SIDE STUFF GUYS, SCOPE MEANS WHAT RIGHTS YOU NEEDED FOR, I RECOMMEND AS MUCH AS YOU CAN, IF YOU DON'T WANT PROBLEMS.
 
+IF YOU WANNA USE SITE AUTHORIZATION, LOOK AT NEXT SNIPPET:
 
+```php
+$vk = getjump\Vk\Core::getInstance()->apiVersion('5.5');
+
+$auth = getjump\Vk\Auth::getInstance();
+$auth->setAppId('3470411')->setScope('')->setSecret('73317331')->setRedirectUri('http://localhost/test.php'); // SETTING ENV
+$token=$auth->startCallback(); //HERE WE WILL HAVE TOKEN, IF EVERYTHING okay
+
+printf("<a href='%s' target='_top'>LINK</a>", $auth->getUrl());
+if($token) {
+    $vk->setToken($token);
+    $vk->request('users.get', ['user_ids' => range(1, 100)])->each(function($i, $v) {
+        if($v->last_name == '') return;
+        print $v->last_name . '<br>';
+    });
+}
+```
 
 I ALREADY DID SOME WRAPPERS JUST FOR YOU, IF YOU WANNA MORE, PLEASE DO AND PULL REQUEST BUT YOU STILL CAN DON'T USE THEM, OR USE SOMETHING LIKE THIS.
 
