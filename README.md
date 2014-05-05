@@ -97,3 +97,28 @@ $data->each(function($key, $value) use($fetchData) {
     return;
 });
 ```
+
+ONCE MORE BLACK MAGIC. VK HAS METHOD CALLED EXECUTE, THAT CAN TAKE SOMETHING LIKE JS CODE. LOOK WHAT I'VE DONE FOR THAT.
+
+```php
+$js1 = $vk->request('messages.get', ['count' => 200, 'offset' =>0 * 200])->toJs(); //IT WILL RETURN VkJs object
+$js2 = $vk->request('messages.get', ['count' => 200, 'offset' =>1 * 200])->toJs();
+$js3 = $vk->request('messages.get', ['count' => 200, 'offset' =>2 * 200])->toJs();
+$js4 = $vk->request('messages.get', ['count' => 200, 'offset' =>3 * 200])->toJs();
+
+
+$js1
+        ->append($js2) // WE ARE APPENDING js2 to js1
+        ->append($js3)
+        ->append($js4) 
+        ->execute() // WE WANT EXECUTE THIS (actually it will return RequestTransaction)
+        ->response //AS FOR NOW WE REALLY DO SOME REQUEST TO API 
+        ->each(
+            function($i, $v) //FIRST CALLBACK IS NEEDED TO GO FOR EVERY PART OF RESPONSE, ARRAY WITH 4-ELS IN OUR CASE
+            {
+                $v->each(function($c, $d) { // SECOND TO CHECK EVERY ELEMENTS IN ARRAY WITH 200 ELEMENTS
+                    if(isset($d->body)) print $d->body; //WE JUST OUTPUTTING MESSAGE IF IT SET
+                });
+            });
+            
+```
