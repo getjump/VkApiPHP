@@ -3,18 +3,20 @@
 header('Content-Type: text/html; charset=utf-8');
 
 require 'vendor/autoload.php';
-require 'getjump/Vk/Core.php';
-require 'getjump/Vk/RequestTransaction.php';
-require 'getjump/Vk/Wrapper/BaseWrapper.php';
-require 'getjump/Vk/Response/Api.php';
-require 'getjump/Vk/Response/Response.php';
-require 'getjump/Vk/Response/Error.php';
-require 'getjump/Vk/Wrapper/LongPoll.php';
-require 'getjump/Vk/Wrapper/User.php';
-require 'getjump/Vk/Wrapper/Friends.php';
-require 'getjump/Vk/Model/BaseModel.php';
-require 'getjump/Vk/Model/User.php';
-require 'getjump/Vk/VkJs.php';
+
+// todo If you not used composer:
+//require 'getjump/Vk/Core.php';
+//require 'getjump/Vk/RequestTransaction.php';
+//require 'getjump/Vk/Wrapper/BaseWrapper.php';
+//require 'getjump/Vk/Response/Api.php';
+//require 'getjump/Vk/Response/Response.php';
+//require 'getjump/Vk/Response/Error.php';
+//require 'getjump/Vk/Wrapper/LongPoll.php';
+//require 'getjump/Vk/Wrapper/User.php';
+//require 'getjump/Vk/Wrapper/Friends.php';
+//require 'getjump/Vk/Model/BaseModel.php';
+//require 'getjump/Vk/Model/User.php';
+//require 'getjump/Vk/VkJs.php';
 
 $vk = getjump\Vk\Core::getInstance()
     ->apiVersion('5.5')
@@ -63,7 +65,7 @@ $friends = new \getjump\Vk\Wrapper\Friends($vk);
 $friends
     ->get(15157875, 'first_name, last_name')
     ->toJs()->execute()->response->each(
-        function($i, $v) {
+        function($i, \getjump\Vk\Model\User $v) {
             print $v->getName() . '<br>';
         });
 

@@ -2,10 +2,6 @@
     "name": "getjump/vk-api-php",
     "description": "VK API PHP, ALL NEW, MAY THE FORCE BE WITH YOU",
     "authors": [
-        {
-            "name": "Aleksey Kiselev (yakud)",
-            "email": "yakudgm@gmail.com"
-        }
     ],
     "require": {
         "guzzlehttp/guzzle": "4.*"
