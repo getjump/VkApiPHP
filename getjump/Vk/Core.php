@@ -2,8 +2,10 @@
 
 namespace getjump\Vk;
 
-class Core
-{
+use Closure;
+use getjump\Vk\Response\Api;
+
+class Core {
     private $params;
     private $accessToken = false;
 
@@ -11,9 +13,14 @@ class Core
 
     public $jsCallback = false;
 
-    public function param($key,
-                          $value, $defaultValue = false) {
-        if(!$value && $defaultValue) {
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     * @param bool $defaultValue
+     * @return $this
+     */
+    public function param($key, $value, $defaultValue = false) {
+        if (!$value && $defaultValue) {
             $value = $defaultValue;
         }
         $this->params[$key] = $value;
@@ -21,54 +28,76 @@ class Core
         return $this;
     }
 
-    public function params($data)
-    {
-        foreach($data as $k => $v) {
+    /**
+     * @param array $data
+     * @return $this
+     */
+    public function params(array $data) {
+        foreach ($data as $k => $v) {
             $this->param($k, $v);
         }
 
         return $this;
     }
 
-    public function createAs($callback)
-    {
+    /**
+     * @param Closure $callback
+     * @return $this
+     */
+    public function createAs(Closure $callback) {
         $this->callback = $callback;
+
         return $this;
     }
 
     /**
      * @param string $methodName
      * @param bool|array $args
-     * @return Response\Api|RequestTransaction
+     * @return Api|RequestTransaction
      */
     public function request($methodName, $args = false) {
-        if($args) $this->params($args);
+        if ($args)
+            $this->params($args);
         $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback);
         $this->reset();
+
         return $d;
     }
 
-    public function reset()
-    {
+    public function reset() {
         $this->params = false;
     }
 
-    public function setToken($accessToken)
-    {
+    /**
+     * @param string $accessToken
+     * @return $this
+     */
+    public function setToken($accessToken) {
         $this->accessToken = $accessToken;
+
         return $this;
     }
 
-    public function apiVersion($version)
-    {
+    /**
+     * @param string $version
+     * @return $this
+     */
+    public function apiVersion($version) {
         $this->params['v'] = $version;
+
         return $this;
     }
 
+    /**
+     * @var Core
+     */
     public static $instance;
 
+    /**
+     * @return Core
+     */
     public static function getInstance() {
-        if(self::$instance === null) {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
 

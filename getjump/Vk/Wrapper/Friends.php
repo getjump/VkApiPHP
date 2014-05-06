@@ -8,32 +8,38 @@
 
 namespace getjump\Vk\Wrapper;
 
-class Friends extends BaseWrapper {
+use getjump\Vk\Model\User;
+use getjump\Vk\RequestTransaction;
+use getjump\Vk\Response\Api;
 
-    const
-        FIELD_SEX = 1,
-        FIELD_PHOTO_MAX_ORIG = 2;
+class Friends extends BaseWrapper {
+    const FIELD_SEX = 1;
+    const FIELD_PHOTO_MAX_ORIG = 2;
 
     /**
-     * @param $userId
+     * @param int|string $userId
      * @param bool $fields
-     * @return \getjump\Vk\Response\Api|\getjump\Vk\RequestTransaction
+     * @return Api|RequestTransaction
      */
-    public function get($userId, $fields = false)
-    {
-        return $this->vk
-            ->param('user_id', $userId)
-            ->param('fields', $fields, null)
-            ->param('order', 'hints')
-            ->createAs(function($d) { return new \getjump\Vk\Model\User($d); })
-            ->request('friends.get');
+    public function get($userId, $fields = false) {
+        return $this->vk->param('user_id', $userId)
+                        ->param('fields', $fields, null)
+                        ->param('order', 'hints')
+                        ->createAs(function ($d) { return new User($d); })
+                        ->request('friends.get');
     }
 
-    public function fieldsToString($bitmask)
-    {
+    /**
+     * @param int $bitmask
+     * @return string
+     */
+    public function fieldsToString($bitmask) {
         $string = array();
-        if($bitmask & self::FIELD_SEX) $string[] = 'sex';
-        if($bitmask & self::FIELD_PHOTO_MAX_ORIG) $string[] = 'photo_max_orig';
+        if ($bitmask & self::FIELD_SEX)
+            $string[] = 'sex';
+        if ($bitmask & self::FIELD_PHOTO_MAX_ORIG)
+            $string[] = 'photo_max_orig';
+
         return implode(',', $string);
     }
 } 
