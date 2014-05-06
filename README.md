@@ -1,10 +1,8 @@
 VkApiPHP
 ========
-
-### VK API PHP, ALL NEW, MAY THE FORCE BE WITH YOU
 ### VK API PHP, all new, may the force be with you
 
-####### CURRENTLY IT REQUIRES GUZZLE
+####### Currently it requires guzzle
 ####### composer "guzzlehttp/guzzle": "4.*"
 
 
