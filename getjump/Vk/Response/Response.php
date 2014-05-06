@@ -10,7 +10,12 @@ namespace getjump\Vk\Response;
 
 use Closure;
 
-class Response {
+/**
+ * Class Response
+ * @package getjump\Vk\Response
+ */
+class Response
+{
     /**
      * @var bool|array
      */
@@ -25,12 +30,14 @@ class Response {
     public $data = false;
 
     /**
+     * Response constructor
      * @param $data
      * @param bool $callback
      */
-    public function __construct($data, $callback = false) {
+    public function __construct($data, $callback = false)
+    {
         if (is_callable($callback) && isset($data->items)) {
-            foreach ($data->items as $k => $d) {
+            foreach ($data->items as $d) {
                 $this->items[] = call_user_func_array($callback, [$d]);
             }
         } else {
@@ -40,7 +47,7 @@ class Response {
         if (is_array($data) || !isset($data->items)) {
             $this->count = sizeof($data);
             if (is_array($data) && is_callable($callback)) {
-                foreach ($data as $k => $d) {
+                foreach ($data as $d) {
                     $this->data[] = call_user_func_array($callback, [$d]);
                 }
             } else {
@@ -50,9 +57,11 @@ class Response {
     }
 
     /**
+     * This method takes Closure as argument, so every element from response will go into this Closure
      * @param Closure $callback
      */
-    public function each(Closure $callback) {
+    public function each(Closure $callback)
+    {
         if (!is_callable($callback))
             return;
         $data = false;
@@ -66,7 +75,8 @@ class Response {
      * @param bool $id
      * @return mixed
      */
-    public function get($id = false) {
+    public function get($id = false)
+    {
         if (!$id) {
             return $this->data[0];
         } else {
@@ -77,7 +87,8 @@ class Response {
     /**
      * @return array|bool
      */
-    public function getResponse() {
+    public function getResponse()
+    {
         return $this->data;
     }
 } 

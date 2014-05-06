@@ -8,40 +8,56 @@
 
 namespace getjump\Vk\Model;
 
-use getjump\Vk\ApiResponse; // todo Where is?
+/**
+ * Class BaseModel
+ * Your models for data interpreting should extends this class.
+ * @package getjump\Vk\Model
+ */
+class BaseModel
+{
 
-class BaseModel {
-
+    /**
+     * Here we will store real data
+     * @var
+     */
     public $data;
 
     /**
+     * Just a constructor
      * @param $data
      */
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $this->data = $data;
     }
 
     /**
+     * We are overriding get, so data will pulling from data array
      * @param string $name
      * @return bool
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return isset($this->data->$name) ? $this->data->$name : false;
     }
 
     /**
+     * We are overriding set, so data will writing to data array
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->data->$name = $value;
     }
 
     /**
+     * We are overriding isset, so data will querying in data array
      * @param string $name
      * @return bool
      */
-    public function __isset($name) {
+    public function __isset($name)
+    {
         return isset($this->data->$name);
     }
 }

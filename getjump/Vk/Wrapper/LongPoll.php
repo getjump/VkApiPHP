@@ -3,7 +3,13 @@ namespace getjump\Vk\Wrapper;
 
 use getjump\Vk\Wrapper\User;
 
-class LongPoll extends BaseWrapper {
+/**
+ * Class LongPoll
+ * Implements LongPolling part of API.
+ * @package getjump\Vk\Wrapper
+ */
+class LongPoll extends BaseWrapper
+{
     const URL_CONNECTION_INFO = 'http://%s?act=a_check&key=%s&ts=%s&wait=25&mode=2';
     CONST LONG_POOL_REQUEST_METHOD = 'messages.getLongPollServer';
 
@@ -19,34 +25,37 @@ class LongPoll extends BaseWrapper {
      * @param $d
      * @return string
      */
-    public function getConnectionInfo($d) {
+    public function getConnectionInfo($d)
+    {
         return sprintf(self::URL_CONNECTION_INFO, $d->server, $d->key, $d->ts);
     }
 
     /**
      * @return array|bool
      */
-    public function getServerData() {
+    public function getServerData()
+    {
         return $this->vk->request(self::LONG_POOL_REQUEST_METHOD)->response->getResponse();
     }
 
-    public function doLoop() {
+    public function doLoop()
+    {
         if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
         }
 
-        $server  = $this->getServerData();
+        $server = $this->getServerData();
         $initial = $this->getConnectionInfo($server);
 
         $user = new User($this->vk);
 
-        $userMap   = [];
+        $userMap = [];
         $userCache = [];
 
         $fetchData = function ($id) use ($user, &$userMap, &$userCache) {
             if (!isset($userMap[$id])) {
                 $userMap[$id] = sizeof($userCache);
-                $userCache[]  = $user->get($id)->response->get();
+                $userCache[] = $user->get($id)->response->get();
             }
 
             return $userCache[$userMap[$id]];
@@ -54,7 +63,7 @@ class LongPoll extends BaseWrapper {
 
         while ($data = $this->guzzle->get($initial)->json(['object' => true])) {
             $server->ts = $data->ts;
-            $initial    = $this->getConnectionInfo($server);
+            $initial = $this->getConnectionInfo($server);
 
             foreach ($data->updates as $update) {
                 switch ($update[0]) {
@@ -72,7 +81,7 @@ class LongPoll extends BaseWrapper {
                     case 101:
                         break;
                     case 9:
-                        $data   = $fetchData($update[1] * -1);
+                        $data = $fetchData($update[1] * -1);
                         $status = $update[2] == 1 ? "AFK" : "Exit";
                         printf("User %s offline(%s)\n", $data->first_name . ' ' . $data->last_name, $status);
                         break;

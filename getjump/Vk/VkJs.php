@@ -11,7 +11,12 @@ namespace getjump\Vk;
 use getjump\Vk\Response\Api;
 use stdClass;
 
-class VkJs {
+/**
+ * Class VkJs
+ * @package getjump\Vk
+ */
+class VkJs
+{
 
     /**
      * @var bool|string
@@ -28,11 +33,13 @@ class VkJs {
     private $callback = false;
 
     /**
+     * Just a constructor
      * @param string $methodName
      * @param bool|array $args
      * @param Core $vk
      */
-    public function __construct($methodName, $args = false, Core $vk) {
+    public function __construct($methodName, $args = false, Core $vk)
+    {
         $arg = [];
         if ($args) {
             foreach ($args as $k => $v) {
@@ -46,9 +53,11 @@ class VkJs {
     }
 
     /**
+     * We wanna send our current VkJs to Vk execute
      * @return RequestTransaction|Api
      */
-    public function execute() {
+    public function execute()
+    {
         $execute = $this->dataString;
         if ($this->requests) {
             foreach ($this->requests as $request) {
@@ -58,9 +67,9 @@ class VkJs {
 
             if (!$this->callback && !$this->vk->jsCallback) {
                 $this->vk->jsCallback = true;
-                $oldCallback          = $this->vk->callback;
+                $oldCallback = $this->vk->callback;
 
-                $this->callback = function($data) use(&$oldCallback){
+                $this->callback = function ($data) use (&$oldCallback) {
                     $std = new stdClass();
                     $std->response = $data;
                     return new Api($std, $oldCallback);
@@ -74,10 +83,12 @@ class VkJs {
     }
 
     /**
+     * Method will append one VkJs object, to another one
      * @param VkJs $js
      * @return $this
      */
-    public function append(VkJs $js) {
+    public function append(VkJs $js)
+    {
         $this->requests[] = $js;
 
         return $this;

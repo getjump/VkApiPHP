@@ -8,7 +8,12 @@
 
 namespace getjump\Vk;
 
-class Auth {
+/**
+ * Class Auth
+ * @package getjump\Vk
+ */
+class Auth
+{
     const URL_ACCESS_TOKEN = 'https://oauth.vk.com/access_token?client_id=%s&client_secret=%s&code=%s&redirect_uri=%s';
 
     /**
@@ -21,7 +26,8 @@ class Auth {
     /**
      * @param bool $options
      */
-    public function __construct($options = false) {
+    public function __construct($options = false)
+    {
         if ($options) {
             $this->options = $options;
         }
@@ -31,7 +37,8 @@ class Auth {
     /**
      * @return string
      */
-    public function getAppId() {
+    public function getAppId()
+    {
         return $this->options['client_id'];
     }
 
@@ -39,7 +46,8 @@ class Auth {
      * @param string $id
      * @return $this
      */
-    public function setAppId($id) {
+    public function setAppId($id)
+    {
         $this->options['client_id'] = $id;
 
         return $this;
@@ -48,7 +56,8 @@ class Auth {
     /**
      * @return string
      */
-    public function getSecret() {
+    public function getSecret()
+    {
         return $this->options['client_secret'];
     }
 
@@ -56,7 +65,8 @@ class Auth {
      * @param string $secret
      * @return $this
      */
-    public function setSecret($secret) {
+    public function setSecret($secret)
+    {
         $this->options['client_secret'] = $secret;
 
         return $this;
@@ -65,7 +75,8 @@ class Auth {
     /**
      * @return string
      */
-    public function getRedirectUri() {
+    public function getRedirectUri()
+    {
         return $this->options['redirect_uri'];
     }
 
@@ -73,7 +84,8 @@ class Auth {
      * @param string $uri
      * @return $this
      */
-    public function setRedirectUri($uri) {
+    public function setRedirectUri($uri)
+    {
         $this->options['redirect_uri'] = $uri;
 
         return $this;
@@ -83,7 +95,8 @@ class Auth {
      * @param $scope
      * @return $this
      */
-    public function setScope($scope) {
+    public function setScope($scope)
+    {
         $this->options['scope'] = $scope;
 
         return $this;
@@ -93,7 +106,8 @@ class Auth {
      * @param $v
      * @return $this
      */
-    public function setVersion($v) {
+    public function setVersion($v)
+    {
         $this->options['v'] = $v;
 
         return $this;
@@ -102,22 +116,27 @@ class Auth {
     /**
      * @return string
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return sprintf('https://oauth.vk.com/authorize?%s', http_build_query($this->options));
     }
 
     /**
+     * Just an alias, for an array
      * @param $d
      * @return mixed
      */
-    public function g($d) {
+    public function g($d)
+    {
         return $this->options[$d];
     }
 
     /**
-     * @return bool
+     * Will return token if everything is OK
+     * @return bool|string
      */
-    public function startCallback() {
+    public function startCallback()
+    {
         if (isset($_GET['code'])) {
             $token = $this->getToken($_GET['code']);
 
@@ -130,10 +149,12 @@ class Auth {
     }
 
     /**
+     * Method converts code to token
      * @param $code
      * @return bool
      */
-    public function getToken($code) {
+    public function getToken($code)
+    {
         if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
         }
@@ -148,9 +169,6 @@ class Auth {
 
         $data = $this->guzzle->get($uri)->json(['object' => true]);
 
-        // todo need this?
-        //var_dump($data);
-
         if (isset($data->access_token)) {
             // POSSIBLY WE SHOULD RETURN OBJECT, WITH USER_ID AND EXPIRES IN, NOT ONLY TOKEN
             return $data->access_token;
@@ -164,7 +182,8 @@ class Auth {
     /**
      * @return Auth
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         return new self;
     }
 }

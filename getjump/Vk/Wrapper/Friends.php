@@ -12,7 +12,13 @@ use getjump\Vk\Model\User;
 use getjump\Vk\RequestTransaction;
 use getjump\Vk\Response\Api;
 
-class Friends extends BaseWrapper {
+/**
+ * Class Friends
+ * Implements some logic for API part that working with friends
+ * @package getjump\Vk\Wrapper
+ */
+class Friends extends BaseWrapper
+{
     const FIELD_SEX = 1;
     const FIELD_PHOTO_MAX_ORIG = 2;
 
@@ -21,19 +27,23 @@ class Friends extends BaseWrapper {
      * @param bool $fields
      * @return Api|RequestTransaction
      */
-    public function get($userId, $fields = false) {
+    public function get($userId, $fields = false)
+    {
         return $this->vk->param('user_id', $userId)
-                        ->param('fields', $fields, null)
-                        ->param('order', 'hints')
-                        ->createAs(function ($d) { return new User($d); })
-                        ->request('friends.get');
+            ->param('fields', $fields, null)
+            ->param('order', 'hints')
+            ->createAs(function ($d) {
+                return new User($d);
+            })
+            ->request('friends.get');
     }
 
     /**
      * @param int $bitmask
      * @return string
      */
-    public function fieldsToString($bitmask) {
+    public function fieldsToString($bitmask)
+    {
         $string = array();
         if ($bitmask & self::FIELD_SEX)
             $string[] = 'sex';
