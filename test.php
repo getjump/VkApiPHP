@@ -13,7 +13,6 @@ require 'getjump/Vk/Wrapper/LongPoll.php';
 require 'getjump/Vk/Wrapper/User.php';
 require 'getjump/Vk/Wrapper/Friends.php';
 require 'getjump/Vk/Model/BaseModel.php';
-require 'getjump/Vk/Model/Friends.php';
 require 'getjump/Vk/Model/User.php';
 require 'getjump/Vk/VkJs.php';
 
