@@ -54,9 +54,9 @@ class Auth {
         return $this;
     }
 
-    public function setScope($permissions)
+    public function setScope($scope)
     {
-        $this->options['permissions'] = $permissions;
+        $this->options['scope'] = $scope;
         return $this;
     }
 

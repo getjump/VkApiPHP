@@ -17,7 +17,7 @@ class Friends extends BaseWrapper {
     /**
      * @param $userId
      * @param bool $fields
-     * @return \getjump\Vk\ApiResponse|\getjump\Vk\RequestTransaction
+     * @return \getjump\Vk\Response\Api|\getjump\Vk\RequestTransaction
      */
     public function get($userId, $fields = false)
     {
@@ -25,7 +25,7 @@ class Friends extends BaseWrapper {
             ->param('user_id', $userId)
             ->param('fields', $fields, null)
             ->param('order', 'hints')
-            ->createAs(function($d) { return new \getjump\Vk\Model\Friends($d); })
+            ->createAs(function($d) { return new \getjump\Vk\Model\User($d); })
             ->request('friends.get');
     }
 

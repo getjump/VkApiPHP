@@ -20,7 +20,7 @@ class BaseModel {
     }
 
     public function __get($name) {
-        return $this->data->$name;
+        return isset($this->data->$name) ? $this->data->$name : false;
     }
 
     public function __set($name, $value)
