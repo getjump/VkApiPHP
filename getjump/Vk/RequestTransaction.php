@@ -8,8 +8,20 @@
 
 namespace getjump\Vk;
 
+use Generator;
+use getjump\Vk\Response\Api;
 
-class RequestTransaction {
+/**
+ * Class RequestTransaction
+ * Is used as last front between API and Library
+ * @package getjump\Vk
+ */
+class RequestTransaction
+{
+    /**
+     * URL Api VK
+     */
+    const URL_VK_API = 'https://api.vk.com/method/';
 
     public $init = false;
 
@@ -27,7 +39,7 @@ class RequestTransaction {
     public $callback = false;
 
     /**
-     * @param $methodName
+     * @param string $methodName
      * @param bool $args
      * @param bool $accessToken
      * @param bool $callback
@@ -40,64 +52,90 @@ class RequestTransaction {
         $this->callback = $callback;
     }
 
+    /**
+     * Batch method, for pulling just $count data at a time with foreach loop
+     * @param int $count
+     * @return Generator
+     */
     public function batch($count = 10)
     {
         $this->args['count'] = $count;
         $this->args['offset'] = 0;
 
-        while(true)
-        {
+        while (true) {
             $d = $this->fetchData();
             yield $d;
             $everything = $d->response->count;
             $this->args['offset'] += $count;
-            if($this->args['offset'] >= $everything) break;
-            //isset($this->args['offset']) ? $this->args['offset'] += $count : $this->args['offset'] = 0;
+
+            if ($this->args['offset'] >= $everything) {
+                break;
+            }
         }
     }
 
+    /**
+     * We are overriding get, so when we will try to access response, our data will get from a server
+     * @param string $name
+     * @return bool
+     */
     public function __get($name)
     {
-        if(!$this->init)
-        {
+        if (!$this->init) {
             return $this->fetchData()->$name;
         }
 
         return false;
     }
 
-    function __call($name, $arguments)
+    /**
+     * We are overriding call, so when we will call to each, our data will get from a server
+     * @param string $name
+     * @param array $arguments
+     * @return bool|mixed
+     */
+    function __call($name, array $arguments)
     {
-        if(!$this->init)
-        {
+        if (!$this->init) {
             return call_user_func_array([$this->fetchData(), $name], $arguments);
         }
 
         return false;
     }
 
+    /**
+     * Querying API for a data
+     * @return Api
+     */
     public function fetchData()
     {
-        if(!$this->guzzle)
-        {
+        if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
         }
 
         $args = $this->args;
+        if ($this->accessToken) {
+            $args['access_token'] = $this->accessToken;
+        }
 
-        if($this->accessToken) $args['access_token'] = $this->accessToken;
+        $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['body' => $args])->json(['object' => true]);
+        $c = new Api($data, $this->callback);
 
-        $c = new Response\Api($this->guzzle->post('https://api.vk.com/method/'.$this->methodName, ['body' => $args])->json(['object' => true]), $this->callback);
-        //$c = new ApiResponse(json_decode(file_get_contents('https://api.vk.com/method/'.$this->methodName.'?'.$query)), $this->callback);
         return $c;
     }
 
-
+    /**
+     * We want just execute, without getting any data
+     */
     public function execute()
     {
         $this->fetchData();
     }
 
+    /**
+     * Will return VkJs object
+     * @return VkJs
+     */
     public function toJs()
     {
         return new VkJs($this->methodName, $this->args, Core::getInstance());

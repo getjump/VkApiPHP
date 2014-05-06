@@ -1,8 +1,17 @@
 <?php
 namespace getjump\Vk\Wrapper;
 
+use getjump\Vk\Wrapper\User;
 
-class LongPoll extends BaseWrapper {
+/**
+ * Class LongPoll
+ * Implements LongPolling part of API.
+ * @package getjump\Vk\Wrapper
+ */
+class LongPoll extends BaseWrapper
+{
+    const URL_CONNECTION_INFO = 'http://%s?act=a_check&key=%s&ts=%s&wait=25&mode=2';
+    CONST LONG_POOL_REQUEST_METHOD = 'messages.getLongPollServer';
 
     public $userCache = [];
     public $userMap = [];
@@ -12,35 +21,39 @@ class LongPoll extends BaseWrapper {
      */
     public $guzzle = false;
 
+    /**
+     * @param $d
+     * @return string
+     */
     public function getConnectionInfo($d)
     {
-        return sprintf("http://%s?act=a_check&key=%s&ts=%s&wait=25&mode=2", $d->server, $d->key, $d->ts);
+        return sprintf(self::URL_CONNECTION_INFO, $d->server, $d->key, $d->ts);
     }
 
+    /**
+     * @return array|bool
+     */
     public function getServerData()
     {
-        return $this->vk->request('messages.getLongPollServer')->response->getResponse();
+        return $this->vk->request(self::LONG_POOL_REQUEST_METHOD)->response->getResponse();
     }
 
     public function doLoop()
     {
-        if(!$this->guzzle)
-        {
+        if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
         }
 
         $server = $this->getServerData();
         $initial = $this->getConnectionInfo($server);
 
-        $user = new \getjump\Vk\Wrapper\User($this->vk);
+        $user = new User($this->vk);
 
         $userMap = [];
         $userCache = [];
 
-        $fetchData = function($id) use($user, &$userMap, &$userCache)
-        {
-            if(!isset($userMap[$id]))
-            {
+        $fetchData = function ($id) use ($user, &$userMap, &$userCache) {
+            if (!isset($userMap[$id])) {
                 $userMap[$id] = sizeof($userCache);
                 $userCache[] = $user->get($id)->response->get();
             }
@@ -48,17 +61,16 @@ class LongPoll extends BaseWrapper {
             return $userCache[$userMap[$id]];
         };
 
-        while($data=$this->guzzle->get($initial)->json(['object' => true]))
-        {
+        while ($data = $this->guzzle->get($initial)->json(['object' => true])) {
             $server->ts = $data->ts;
             $initial = $this->getConnectionInfo($server);
 
-            foreach($data->updates as $update)
-            {
-                switch($update[0]) {
+            foreach ($data->updates as $update) {
+                switch ($update[0]) {
                     case 4:
                         $data = $fetchData($update[3]);
-                        if($update[2] & 2) continue;
+                        if ($update[2] & 2)
+                            continue;
                         printf("New message from %s '%s'\n", $data->first_name . ' ' . $data->last_name, $update[6]);
                         var_dump($update);
                         break;
@@ -69,12 +81,12 @@ class LongPoll extends BaseWrapper {
                     case 101:
                         break;
                     case 9:
-                        $data = $fetchData($update[1]*-1);
+                        $data = $fetchData($update[1] * -1);
                         $status = $update[2] == 1 ? "AFK" : "Exit";
                         printf("User %s offline(%s)\n", $data->first_name . ' ' . $data->last_name, $status);
                         break;
                     case 8:
-                        $data = $fetchData($update[1]*-1);
+                        $data = $fetchData($update[1] * -1);
                         printf("User %s online\n", $data->first_name . ' ' . $data->last_name);
                         break;
                     default:

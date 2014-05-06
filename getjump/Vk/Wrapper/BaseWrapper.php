@@ -2,18 +2,26 @@
 
 namespace getjump\Vk\Wrapper;
 
+use getjump\Vk\Core;
 
-use getjump\Vk\ApiResponse;
-
-class BaseWrapper {
+/**
+ * Class BaseWrapper
+ * Your Wrappers should extends this class as part of architecture.
+ * @package getjump\Vk\Wrapper
+ */
+class BaseWrapper
+{
     /**
-     * @var \getjump\Vk\Core;
+     * @var Core;
      */
     protected $vk;
 
-    public function __construct(\getjump\Vk\Core $vk) {
-        if($vk instanceof \getjump\Vk\Core)
-        {
+    /**
+     * @param Core $vk
+     */
+    public function __construct(Core $vk)
+    {
+        if ($vk instanceof Core) {
             $this->vk = $vk;
         }
     }
