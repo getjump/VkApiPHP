@@ -2,33 +2,34 @@ VkApiPHP
 ========
 
 ### VK API PHP, ALL NEW, MAY THE FORCE BE WITH YOU
+### VK API PHP, all new, may the force be with you
 
 ####### CURRENTLY IT REQUIRES GUZZLE
 ####### composer "guzzlehttp/guzzle": "4.*"
 
 
-HELLO GUYS AND THIS IS MY NEW VK LIBRARIES. IF YOU WANNA BE CHOTKIY POCIK, YOU SHOULD USE THIS FOR YOUR VK API REQUESTS.
+Hello guys and this is my new VK libraries. If you wanna be "chotkiy pocik", you should use this for your VK API requests.
 
-I WILL SHOW WHAT YOU CAN DO WITH THIS STUFF
+I will show what you can do with this stuff
 
-OKAY, THAT IS HOW WE CAN INSTANTIATE MAIN OBJECT FOR OUR FUTURE REQUESTS
+Okay, that is how we can instantiate main object for our future requests
 
 ```php
 $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR TOKENS GOES <<<);
 ```
 
 >YOU CAN GET SOME TOKENS AT : 
+>You can get some tokens at:
 >http://oauth.vk.com/authorize?client_id=3470411&scope=messages,photos,groups,status,wall,offline&redirect_uri=blank.html&display=page&v=5.5&response_type=token
->I CAN'T STEAL THEM, SINCE IT'S VK SIDE STUFF GUYS, SCOPE MEANS WHAT RIGHTS YOU NEEDED FOR, I RECOMMEND AS MUCH AS YOU CAN, IF YOU DON'T WANT PROBLEMS.
-
-IF YOU WANNA USE SITE AUTHORIZATION, LOOK AT NEXT SNIPPET:
+>I can't steal them, since it's VK side stuff guys, scope means what rights you needed for, i recommend as much as you can, if you don't want problems.
+If you wanna use site authorization, look at next snippet:
 
 ```php
 $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5');
 
 $auth = getjump\Vk\Auth::getInstance();
 $auth->setAppId('3470411')->setScope('SCOPE')->setSecret('SECRET CODE')->setRedirectUri('http://localhost/test.php'); // SETTING ENV
-$token=$auth->startCallback(); //HERE WE WILL HAVE TOKEN, IF EVERYTHING okay
+$token=$auth->startCallback(); // Here we will have token, if everything okay
 
 printf("<a href='%s' target='_top'>LINK</a>", $auth->getUrl());
 if($token) {
@@ -40,30 +41,30 @@ if($token) {
 }
 ```
 
-I ALREADY DID SOME WRAPPERS JUST FOR YOU, IF YOU WANNA MORE, PLEASE DO AND PULL REQUEST BUT YOU STILL CAN DON'T USE THEM, OR USE SOMETHING LIKE THIS.
+I already did some wrappers just for you, if you wanna more, please do and pull request but you still can don't use them, or use something like this.
 
 ```php
 $vk->request('friends.get', ['user_id' => '15157875'])->each(function($i, $v) {});
 ```
 
-THAT IS LONG POLLING SHIET, IT WORKS LIKE A HELL, AS FAST AS YOU CAN SEE.
+That us long polling shiet, it works like a hell, as fast as you can see.
 ```php
-//LONG POLLING LOOP
+// Long pooling loop
 $lp = new getjump\Vk\Wrapper\LongPoll($vk);
 $lp->doLoop();
 ```
- 
-WE WILL DO BADASS STUFF, LIKE KISS. YOU CAN DO LIKE THE FOLLOWING AND IT WILL WORKS
+
+We will do badass stuff, like kiss. You can do like the following and it will works
 ```php
 //KISS
 $user=new getjump\Vk\Wrapper\User(getjump\Vk\Core::getInstance()->apiVersion('5.5'));
 $user->get(1, 'photo_max_orig, sex'); //It will contain RequestTransaction, and will wait for your action, like getting response ->response or calling ->each(callback)
 //Since __get and __call are overrided, we will request for a data, only when it neeeded
 ```
- 
-WE CAN USE MY OWN SAKHALIN TECHNOLOGIES AND TAKE ALL THE STUFF THAT VK HAVE FOR THAT REQUEST USING GENERATORS
+
+We can use my own sakhalin technilogies and take all the stuff that VK have for that request using generators
 ```php
-//FRIENDS GET
+// Friends gets
 $friends = new getjump\Vk\Wrapper\Friends($vk);
 foreach($friends->get(15157875, 'first_name, last_name')->batch(100) as $f) //BATCH MEAN $f WILL CONTAIN JUST 100 ELEMENTS, AND REQUEST WILL MADE FOR 100 ELEMENTS
 {
@@ -78,7 +79,7 @@ foreach($friends->get(15157875, 'first_name, last_name')->batch(100) as $f) //BA
 }
 ```
 
-BUT YOU STILL CAN DO OLD STYLE STUFF
+But you still can do old style stuff
 ```php
  //SECOND OPTION TO JUST GET EVERYTHING, WITHOUT count BEING SEND
 $friends->get(15157875, 'first_name, last_name')->response->each(function($i, $d) {
@@ -88,8 +89,8 @@ $friends->get(15157875, 'first_name, last_name')->response->each(function($i, $d
      }
 });
 ```
- 
-THAT SNIPPET WILL SHOW YOU YOUR LAST 200 MESSAGES
+
+That snippet will show you your last 200 messages
 ```php
 //MESSAGES
 $data = $vk->request('messages.get', ['count' => 200]);
@@ -118,8 +119,7 @@ $data->each(function($key, $value) use($fetchData) {
 });
 ```
 
-ONCE MORE BLACK MAGIC. VK HAS METHOD CALLED EXECUTE, THAT CAN TAKE SOMETHING LIKE JS CODE. LOOK WHAT I'VE DONE FOR THAT.
-
+Once more black magic. VK has method called execute, that can take something like JS code. Look what i've done for that.
 ```php
 $js1 = $vk->request('messages.get', ['count' => 200, 'offset' =>0 * 200])->toJs(); //IT WILL RETURN VkJs object
 $js2 = $vk->request('messages.get', ['count' => 200, 'offset' =>1 * 200])->toJs();
