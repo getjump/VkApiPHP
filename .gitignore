@@ -218,3 +218,10 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#############
+## Composer
+#############
+composer.phar
+composer.lock
+/vendor/
