@@ -8,26 +8,39 @@
 
 namespace getjump\Vk\Model;
 
-
-use getjump\Vk\ApiResponse;
+use getjump\Vk\ApiResponse; // todo Where is?
 
 class BaseModel {
 
     public $data;
 
+    /**
+     * @param $data
+     */
     public function __construct($data) {
         $this->data = $data;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function __get($name) {
         return isset($this->data->$name) ? $this->data->$name : false;
     }
 
-    public function __set($name, $value)
-    {
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value) {
         $this->data->$name = $value;
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function __isset($name) {
         return isset($this->data->$name);
     }

@@ -2,18 +2,20 @@
 
 namespace getjump\Vk\Wrapper;
 
-
-use getjump\Vk\ApiResponse;
+use getjump\Vk\ApiResponse; // todo Where is?
+use getjump\Vk\Core;
 
 class BaseWrapper {
     /**
-     * @var \getjump\Vk\Core;
+     * @var Core;
      */
     protected $vk;
 
-    public function __construct(\getjump\Vk\Core $vk) {
-        if($vk instanceof \getjump\Vk\Core)
-        {
+    /**
+     * @param Core $vk
+     */
+    public function __construct(Core $vk) {
+        if ($vk instanceof Core) {
             $this->vk = $vk;
         }
     }
