@@ -7,8 +7,8 @@
         "guzzlehttp/guzzle": "4.*"
     },
     "autoload": {
-        "classmap": [
-            "/"
-        ]
+        "psr-4": {
+            "getjump\\Vk\\": "getjump/Vk/"
+        }
     }
 }

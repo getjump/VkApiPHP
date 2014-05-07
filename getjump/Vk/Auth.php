@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: getju_000
- * Date: 05.05.14
- * Time: 19:04
- */
 
 namespace getjump\Vk;
 
@@ -28,7 +22,7 @@ class Auth
      */
     public function __construct($options = false)
     {
-        if ($options) {
+        if (is_array($options)) {
             $this->options = $options;
         }
         $this->options['response_type'] = 'code';

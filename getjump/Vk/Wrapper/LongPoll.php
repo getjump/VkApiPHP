@@ -1,7 +1,9 @@
 <?php
 namespace getjump\Vk\Wrapper;
 
+use getjump\Vk\Model;
 use getjump\Vk\Wrapper\User;
+use getjump\Vk\Constants\LongPolling as LP;
 
 /**
  * Class LongPoll
@@ -52,6 +54,10 @@ class LongPoll extends BaseWrapper
         $userMap = [];
         $userCache = [];
 
+        /**
+         * @param $id
+         * @return Model\User
+         */
         $fetchData = function ($id) use ($user, &$userMap, &$userCache) {
             if (!isset($userMap[$id])) {
                 $userMap[$id] = sizeof($userCache);
@@ -66,28 +72,31 @@ class LongPoll extends BaseWrapper
             $initial = $this->getConnectionInfo($server);
 
             foreach ($data->updates as $update) {
+                /**
+                 * @var $user Model\User
+                 */
                 switch ($update[0]) {
-                    case 4:
-                        $data = $fetchData($update[3]);
+                    case LP::MESSAGE_ADD:
+                        $user = $fetchData($update[3]);
                         if ($update[2] & 2)
                             continue;
-                        printf("New message from %s '%s'\n", $data->first_name . ' ' . $data->last_name, $update[6]);
+                        printf("New message from %s '%s'\n", $user->getName(), $update[6]);
                         var_dump($update);
                         break;
-                    case 61:
-                        $data = $fetchData($update[1]);
-                        printf("User %s writing\n", $data->first_name . ' ' . $data->last_name);
+                    case LP::MESSAGE_WRITE:
+                        $user = $fetchData($update[1]);
+                        printf("User %s writing\n", $user->getName());
                         break;
-                    case 101:
+                    case LP::DATA_ADD:
                         break;
-                    case 9:
-                        $data = $fetchData($update[1] * -1);
+                    case LP::FRIEND_OFFLINE:
+                        $user = $fetchData($update[1] * -1);
                         $status = $update[2] == 1 ? "AFK" : "Exit";
-                        printf("User %s offline(%s)\n", $data->first_name . ' ' . $data->last_name, $status);
+                        printf("User %s offline(%s)\n", $user->getName(), $status);
                         break;
-                    case 8:
-                        $data = $fetchData($update[1] * -1);
-                        printf("User %s online\n", $data->first_name . ' ' . $data->last_name);
+                    case LP::FRIEND_ONLINE:
+                        $user = $fetchData($update[1] * -1);
+                        printf("User %s online\n", $user->getName());
                         break;
                     default:
                         printf("Unknown event %s {%s}\n", $update[0], implode(',', $update));

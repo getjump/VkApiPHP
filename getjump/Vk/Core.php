@@ -12,6 +12,9 @@ use getjump\Vk\Response\Api;
 class Core
 {
     private $params;
+
+    private $lang = false;
+    private $version = false;
     private $accessToken = false;
 
     public $callback = false;
@@ -29,8 +32,9 @@ class Core
     {
         if (!$value && $defaultValue) {
             $value = $defaultValue;
+        } else if($value) {
+            $this->params[$key] = $value;
         }
-        $this->params[$key] = $value;
 
         return $this;
     }
@@ -69,7 +73,7 @@ class Core
      */
     public function request($methodName, $args = false)
     {
-        if ($args)
+        if (is_array($args))
             $this->params($args);
         $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback);
         $this->reset();
@@ -80,6 +84,8 @@ class Core
     public function reset()
     {
         $this->params = false;
+        $this->param('lang', $this->lang);
+        $this->param('v', $this->version);
     }
 
     /**
@@ -91,6 +97,13 @@ class Core
     {
         $this->accessToken = $accessToken;
 
+        return $this;
+    }
+
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
+        $this->param('lang', $this->lang);
         return $this;
     }
 
