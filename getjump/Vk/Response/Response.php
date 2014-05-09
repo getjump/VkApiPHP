@@ -32,7 +32,7 @@ class Response
     /**
      * Response constructor
      * @param $data
-     * @param bool $callback
+     * @param bool|Closure $callback
      */
     public function __construct($data, $callback = false)
     {
@@ -62,8 +62,9 @@ class Response
      */
     public function each(Closure $callback)
     {
-        if (!is_callable($callback))
+        if (!is_callable($callback)) {
             return;
+        }
         $data = false;
         $this->items ? $data = & $this->items : (!$this->data ? : $data = & $this->data);
         foreach ($data as $k => $v) {
@@ -78,8 +79,7 @@ class Response
     public function get($id = false)
     {
         if (!$id) {
-            if(is_array($this->data))
-            {
+            if (is_array($this->data)) {
                 return $this->data[0];
             } else {
                 return $this->data;
@@ -89,9 +89,9 @@ class Response
         }
     }
 
-    function __get($name)
+    public function __get($name)
     {
-        if(!is_array($this->data)) {
+        if (!is_array($this->data)) {
             return $this->data->{$name};
         }
 
@@ -110,4 +110,4 @@ class Response
     {
         return $this->data;
     }
-} 
+}

@@ -22,8 +22,9 @@ class User extends BaseWrapper
      */
     public function get($userId, $fields = false)
     {
-        if (is_array($userId))
+        if (is_array($userId)) {
             $userId = implode(',', $userId);
+        }
 
         return $this->vk->param('user_ids', $userId)
             ->param('fields', $this->fieldsToString($fields), null)
@@ -40,11 +41,13 @@ class User extends BaseWrapper
     public function fieldsToString($bitmask)
     {
         $string = array();
-        if ($bitmask & self::FIELD_SEX)
+        if ($bitmask & self::FIELD_SEX) {
             $string[] = 'sex';
-        if ($bitmask & self::FIELD_PHOTO_MAX_ORIG)
+        }
+        if ($bitmask & self::FIELD_PHOTO_MAX_ORIG) {
             $string[] = 'photo_max_orig';
+        }
 
         return implode(',', $string);
     }
-} 
+}

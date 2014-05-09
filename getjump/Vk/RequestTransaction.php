@@ -23,20 +23,18 @@ class RequestTransaction
      */
     const URL_VK_API = 'https://api.vk.com/method/';
 
-    public $init = false;
-
-    public $worker = false;
+    private $init = false;
 
     /**
      * @var \GuzzleHttp\Client
      */
-    public $guzzle = false;
+    private $guzzle = false;
 
     private $accessToken = false;
 
-    public $methodName = false;
-    public $args = array();
-    public $callback = false;
+    private $methodName = false;
+    private $args = array();
+    private $callback = false;
 
     /**
      * @param string $methodName
@@ -94,7 +92,7 @@ class RequestTransaction
      * @param array $arguments
      * @return bool|mixed
      */
-    function __call($name, array $arguments)
+    public function __call($name, array $arguments)
     {
         if (!$this->init) {
             return call_user_func_array([$this->fetchData(), $name], $arguments);
@@ -107,7 +105,7 @@ class RequestTransaction
      * Querying API for a data
      * @return Api
      */
-    public function fetchData()
+    private function fetchData()
     {
         if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
@@ -138,6 +136,6 @@ class RequestTransaction
      */
     public function toJs()
     {
-        return new VkJs($this->methodName, $this->args, Core::getInstance());
+        return new VkJs(Core::getInstance(), $this->methodName, $this->args);
     }
-} 
+}

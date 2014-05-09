@@ -24,9 +24,8 @@ class Account extends BaseWrapper
     public function validateRights($permissions, $bitmask = 0)
     {
         $valid = 0;
-        if(is_array($bitmask))
-        {
-            foreach($bitmask as $bit) {
+        if (is_array($bitmask)) {
+            foreach ($bitmask as $bit) {
                 $valid = $this->validateRights($permissions, $bit);
             }
         } else {

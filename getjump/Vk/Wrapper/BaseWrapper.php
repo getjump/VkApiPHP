@@ -34,4 +34,4 @@ class BaseWrapper
             $this->guzzle = new \GuzzleHttp\Client();
         }
     }
-} 
+}

@@ -46,10 +46,14 @@ class Friends extends BaseWrapper
     {
         $string = array();
         if ($bitmask & self::FIELD_SEX)
+        {
             $string[] = 'sex';
+        }
         if ($bitmask & self::FIELD_PHOTO_MAX_ORIG)
+        {
             $string[] = 'photo_max_orig';
+        }
 
         return implode(',', $string);
     }
-} 
+}

@@ -8,10 +8,13 @@
 
 require '../vendor/autoload.php';
 
-class CoreTest extends PHPUnit_Framework_TestCase {
+class CoreTest extends PHPUnit_Framework_TestCase
+{
     public function testCore()
     {
-        $x = function() { return 'test'; };
+        $x = function () {
+            return 'test';
+        };
         $vk = \getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken('test')->createAs($x);
         $this->assertInstanceOf('\getjump\Vk\Core', $vk);
         $rT = $vk->request('test');

@@ -34,11 +34,11 @@ class VkJs
 
     /**
      * Just a constructor
+     * @param Core $vk
      * @param string $methodName
      * @param bool|array $args
-     * @param Core $vk
      */
-    public function __construct($methodName, $args = false, Core $vk)
+    public function __construct(Core $vk, $methodName, $args = false)
     {
         $arg = [];
         if ($args) {
@@ -93,4 +93,4 @@ class VkJs
 
         return $this;
     }
-} 
+}

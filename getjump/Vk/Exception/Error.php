@@ -10,9 +10,11 @@ namespace getjump\Vk\Exception;
 
 use Exception;
 
-class Error extends Exception {
-    public function __construct($message = "", $code = 0) {
+class Error extends Exception
+{
+    public function __construct($message = "", $code = 0)
+    {
         $this->message = $message;
         $this->code = $code;
     }
-} 
+}

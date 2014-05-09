@@ -4,8 +4,6 @@ header('Content-Type: text/html; charset=utf-8');
 
 require 'vendor/autoload.php';
 
-use getjump\Vk\Constants\Permissions;
-
 // todo If you not used composer:
 //require 'getjump/Vk/Core.php';
 //require 'getjump/Vk/RequestTransaction.php';

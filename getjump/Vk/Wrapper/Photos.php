@@ -6,7 +6,8 @@ use getjump\Vk\Model\Photos\UploadResponse;
 use getjump\Vk\Model\Photos\UploadUrl;
 use GuzzleHttp\Post\PostFile;
 
-class Photos extends BaseWrapper {
+class Photos extends BaseWrapper
+{
 
     /**
      * @param $album
@@ -16,10 +17,10 @@ class Photos extends BaseWrapper {
     public function getUploadServer($album, $group = false)
     {
         return $this->vk
-                ->param('album_id', $album)
-                ->param('group_id', $group)
-                ->request('photos.getUploadServer')
-                ->one();
+            ->param('album_id', $album)
+            ->param('group_id', $group)
+            ->request('photos.getUploadServer')
+            ->one();
     }
 
     /**
@@ -36,10 +37,9 @@ class Photos extends BaseWrapper {
             ->request('photos.save')->execute();
     }
 
-    public function uploadAlbum(array $files = array(), $album, $group = false)
+    public function uploadAlbum(array $files = array(), $album = false, $group = false)
     {
-        if(sizeof($files) > 5 || sizeof($files) == 0)
-        {
+        if (sizeof($files) > 5 || sizeof($files) == 0) {
             // todo Exception
         }
 
@@ -47,11 +47,10 @@ class Photos extends BaseWrapper {
 
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
         $postBody = $request->getBody();
-        foreach($files as $k => $file)
-        {
-            $postBody->addFile(new PostFile('file'.($k+1), fopen($file, 'r')));
+        foreach ($files as $k => $file) {
+            $postBody->addFile(new PostFile('file' . ($k + 1), fopen($file, 'r')));
         }
         $response = $this->guzzle->send($request);
         $this->save($response->json(['object' => 1]));
     }
-} 
+}

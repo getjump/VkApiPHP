@@ -12,7 +12,6 @@ use getjump\Vk\Exception;
 
 /**
  * Class Error
- * TODO :  Possibly, we should throw Exception if Error found
  * @package getjump\Vk\Response
  */
 class Error
@@ -56,4 +55,4 @@ class Error
     {
         return $this->request_params;
     }
-} 
+}

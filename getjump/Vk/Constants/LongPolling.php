@@ -21,4 +21,4 @@ class LongPolling
         INCOMING_CALL = 70,
         NEW_COUNTER = 80,
         DATA_ADD = 101; // DEPRECATED
-} 
+}

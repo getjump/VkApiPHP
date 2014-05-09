@@ -135,7 +135,7 @@ class Auth
             $token = $this->getToken($_GET['code']);
 
             return $token;
-        } else if (isset($_GET['error'])) {
+        } elseif (isset($_GET['error'])) {
             //blah blah
         }
 
@@ -166,7 +166,7 @@ class Auth
         if (isset($data->access_token)) {
             // POSSIBLY WE SHOULD RETURN OBJECT, WITH USER_ID AND EXPIRES IN, NOT ONLY TOKEN
             return $data->access_token;
-        } else if (isset($data->error)) {
+        } elseif (isset($data->error)) {
             // ERROR PROCESSING
         }
 

@@ -1,9 +1,8 @@
 <?php
 namespace getjump\Vk\Wrapper;
 
-use getjump\Vk\Model;
-use getjump\Vk\Wrapper\User;
 use getjump\Vk\Constants\LongPolling as LP;
+use getjump\Vk\Model;
 
 /**
  * Class LongPoll
@@ -12,8 +11,10 @@ use getjump\Vk\Constants\LongPolling as LP;
  */
 class LongPoll extends BaseWrapper
 {
+    //Really? Why should we move that stuff to constants just for one call?
+    //Looks ugly
     const URL_CONNECTION_INFO = 'http://%s?act=a_check&key=%s&ts=%s&wait=25&mode=2';
-    CONST LONG_POOL_REQUEST_METHOD = 'messages.getLongPollServer';
+    const LONG_POOL_REQUEST_METHOD = 'messages.getLongPollServer';
 
     public $userCache = [];
     public $userMap = [];
@@ -69,8 +70,9 @@ class LongPoll extends BaseWrapper
                 switch ($update[0]) {
                     case LP::MESSAGE_ADD:
                         $user = $fetchData($update[3]);
-                        if ($update[2] & 2)
+                        if ($update[2] & 2) {
                             continue;
+                        }
                         printf("New message from %s '%s'\n", $user->getName(), $update[6]);
                         var_dump($update);
                         break;

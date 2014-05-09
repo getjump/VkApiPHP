@@ -32,9 +32,9 @@ class Core
     {
         if (!$value && $defaultValue) {
             $value = $defaultValue;
-        } else if($value) {
-            $this->params[$key] = $value;
         }
+
+        $this->params[$key] = $value;
 
         return $this;
     }
@@ -73,8 +73,9 @@ class Core
      */
     public function request($methodName, $args = false)
     {
-        if (is_array($args))
+        if (is_array($args)) {
             $this->params($args);
+        }
         $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback);
         $this->reset();
 
