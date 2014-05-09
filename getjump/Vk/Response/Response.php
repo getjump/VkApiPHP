@@ -78,10 +78,29 @@ class Response
     public function get($id = false)
     {
         if (!$id) {
-            return $this->data[0];
+            if(is_array($this->data))
+            {
+                return $this->data[0];
+            } else {
+                return $this->data;
+            }
         } else {
             return $this->data[$id];
         }
+    }
+
+    function __get($name)
+    {
+        if(!is_array($this->data)) {
+            return $this->data->{$name};
+        }
+
+        return false;
+    }
+
+    public function one()
+    {
+        return $this->get();
     }
 
     /**

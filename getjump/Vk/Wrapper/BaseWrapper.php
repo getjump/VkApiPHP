@@ -12,6 +12,11 @@ use getjump\Vk\Core;
 class BaseWrapper
 {
     /**
+     * @var \GuzzleHttp\Client
+     */
+    public $guzzle = false;
+
+    /**
      * @var Core;
      */
     protected $vk;
@@ -23,6 +28,10 @@ class BaseWrapper
     {
         if ($vk instanceof Core) {
             $this->vk = $vk;
+        }
+
+        if (!$this->guzzle) {
+            $this->guzzle = new \GuzzleHttp\Client();
         }
     }
 } 

@@ -20,7 +20,7 @@ class BaseModel
      * Here we will store real data
      * @var
      */
-    public $data;
+    private $data;
 
     /**
      * Just a constructor

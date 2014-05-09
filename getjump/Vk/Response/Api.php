@@ -34,6 +34,21 @@ class Api
         $this->response->each($callback);
     }
 
+    public function one()
+    {
+        return $this->response->one();
+    }
+
+    public function __call($name, $arguments)
+    {
+        return call_user_func_array([$this->response, $name], $arguments);
+    }
+
+    public function __get($name)
+    {
+        return $this->response->{$name};
+    }
+
     /**
      * @return array|bool
      */

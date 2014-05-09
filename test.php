@@ -25,12 +25,8 @@ $vk = getjump\Vk\Core::getInstance()
     ->setLang('en')
     ->setToken('');
 
-$user = new \getjump\Vk\Wrapper\User($vk);
-$user1 = new \getjump\Vk\Wrapper\User($vk);
-
-$account = new \getjump\Vk\Wrapper\Account($vk);
-var_dump($account->validateRights($account->getAppPermissions(), [Permissions::MESSAGES, Permissions::OFFLINE]));
-
+$photos = new \getjump\Vk\Wrapper\Photos($vk);
+$photos->uploadAlbum(['test.jpg'], 189754043);
 //$lp = new \getjump\Vk\Wrapper\LongPoll($vk);
 //
 //$user = new \getjump\Vk\Wrapper\User($vk);

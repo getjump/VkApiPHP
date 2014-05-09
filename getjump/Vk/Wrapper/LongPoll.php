@@ -19,11 +19,6 @@ class LongPoll extends BaseWrapper
     public $userMap = [];
 
     /**
-     * @var \GuzzleHttp\Client
-     */
-    public $guzzle = false;
-
-    /**
      * @param $d
      * @return string
      */
@@ -42,10 +37,6 @@ class LongPoll extends BaseWrapper
 
     public function doLoop()
     {
-        if (!$this->guzzle) {
-            $this->guzzle = new \GuzzleHttp\Client();
-        }
-
         $server = $this->getServerData();
         $initial = $this->getConnectionInfo($server);
 
