@@ -1,14 +1,14 @@
-VkApiPHP
-========
-### VK API PHP, all new, may the force be with you
+# Vk API PHP
 
-####### Currently it requires guzzle
-####### composer "guzzlehttp/guzzle": "4.*"
+That library will help you organize your work with API Vk.com
 
+## Installation
 
-Hello guys and this is my new VK libraries. If you wanna be "chotkiy pocik", you should use this for your VK API requests.
+You can get library and all of it dependencies through [composer](https://getcomposer.org/)
 
-I will show what you can do with this stuff
+`composer require "getjump/vk:*"`
+
+## Explanation
 
 Okay, that is how we can instantiate main object for our future requests
 
