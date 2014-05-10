@@ -11,18 +11,18 @@ namespace getjump\Vk\Constants;
 
 class Error
 {
-    const ERROR_UNKNOWN = 1;
-    const ERROR_APP_DISABLED = 2;
-    const ERROR_UNKNOWN_METHOD = 3;
-    const ERROR_WRONG_SIGN = 4;
-    const ERROR_AUTH_FAILED = 5;
-    const ERROR_TOO_MANY_REQUESTS_IN_SECOND = 6;
-    const ERROR_INSUFFICIENT_PERMISSIONS = 7;
-    const ERROR_WRONG_REQUEST = 8;
-    const ERROR_TOO_MANY_SAME_ACTIONS = 9;
+    const UNKNOWN = 1;
+    const APP_DISABLED = 2;
+    const UNKNOWN_METHOD = 3;
+    const WRONG_SIGN = 4;
+    const AUTH_FAILED = 5;
+    const TOO_MANY_REQUESTS_IN_SECOND = 6;
+    const INSUFFICIENT_PERMISSIONS = 7;
+    const WRONG_REQUEST = 8;
+    const TOO_MANY_SAME_ACTIONS = 9;
 
-    const ERROR_CAPTCHA = 14;
-    const ERROR_HTTP_AUTH = 16;
-    const ERROR_VALIDATION = 17;
-    const ERROR_NOT_STANDALONE = 20;
+    const CAPTCHA = 14;
+    const HTTP_AUTH = 16;
+    const VALIDATION = 17;
+    const NOT_STANDALONE = 20;
 }
