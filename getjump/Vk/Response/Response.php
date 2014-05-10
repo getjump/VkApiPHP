@@ -93,6 +93,9 @@ class Response
     {
         if (!is_array($this->data)) {
             return $this->data->{$name};
+        } elseif(sizeof($this->data) == 0 && is_object($this->data[0]))
+        {
+            return $this->data[0]->{$name};
         }
 
         return false;

@@ -12,12 +12,11 @@ use getjump\Vk\Response\Api;
  */
 class User extends BaseWrapper
 {
-    const FIELD_SEX = 1,
-        FIELD_PHOTO_MAX_ORIG = 2;
+
 
     /**
      * @param $userId
-     * @param bool $fields
+     * @param bool|array $fields
      * @return RequestTransaction|Api
      */
     public function get($userId, $fields = false)
@@ -38,16 +37,8 @@ class User extends BaseWrapper
      * @param int $bitmask
      * @return string
      */
-    public function fieldsToString($bitmask)
+    public function fieldsToString($data)
     {
-        $string = array();
-        if ($bitmask & self::FIELD_SEX) {
-            $string[] = 'sex';
-        }
-        if ($bitmask & self::FIELD_PHOTO_MAX_ORIG) {
-            $string[] = 'photo_max_orig';
-        }
-
-        return implode(',', $string);
+        return implode(',', $data);
     }
 }
