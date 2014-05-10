@@ -1,14 +1,21 @@
 {
-    "name": "getjump/vk-api-php",
-    "description": "VK API PHP, ALL NEW, MAY THE FORCE BE WITH YOU",
+    "name": "getjump/vk",
+    "description": "Library for work with API Vk.com",
+    "keywords": ["php", "vk", "api", "library", "vkontakte"],
+    "license": "MIT",
     "authors": [
+        {
+            "name" : "Pavel S.",
+            "email" : "contact@getjump.me"
+        }
     ],
     "require": {
-        "guzzlehttp/guzzle": "4.*"
+        "guzzlehttp/guzzle": "4.*",
+        "php": ">=5.5.0"
     },
     "autoload": {
         "psr-4": {
-            "getjump\\Vk\\": "getjump/Vk/"
+            "getjump\\Vk\\": "src/getjump/Vk/"
         }
     }
 }
