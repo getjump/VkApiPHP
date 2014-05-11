@@ -54,6 +54,11 @@ class Response
                 $this->data = $data;
             }
         }
+
+        if(is_object($data) && is_callable($callback))
+        {
+            $this->data = call_user_func_array($callback, [$data]);
+        }
     }
 
     /**
@@ -81,6 +86,8 @@ class Response
         if (!$id) {
             if (is_array($this->data)) {
                 return $this->data[0];
+            } elseif(isset($this->items)) {
+                return $this->items[0];
             } else {
                 return $this->data;
             }

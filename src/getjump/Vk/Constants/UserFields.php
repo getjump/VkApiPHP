@@ -16,5 +16,6 @@ class UserFields
         BDATE = 'bdate',
         SEX = 'sex',
         PHOTO_MAX_ORIG = 'photo_max_orig',
-        VERIFIED = 'verified';
+        VERIFIED = 'verified',
+        STATUS = 'status';
 }
