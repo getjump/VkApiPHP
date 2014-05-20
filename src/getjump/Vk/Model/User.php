@@ -28,4 +28,19 @@ class User extends BaseModel
         }
         return new StatusAudio($this->status_audio);
     }
+
+    public function getMobile()
+    {
+        return $this->mobile_phone;
+    }
+
+    public function getPhone()
+    {
+        return $this->home_phone;
+    }
+
+    public function hasMobile()
+    {
+        return $this->has_mobile;
+    }
 }

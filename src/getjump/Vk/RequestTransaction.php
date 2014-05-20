@@ -53,23 +53,19 @@ class RequestTransaction
     /**
      * Batch method, for pulling just $count data at a time with foreach loop
      * @param int $count
-     * @return Generator
+     * @return BatchTransaction
      */
     public function batch($count = 10)
     {
         $this->args['count'] = $count;
         $this->args['offset'] = 0;
 
-        while (true) {
-            $d = $this->fetchData();
-            yield $d;
-            $everything = $d->response->count;
-            $this->args['offset'] += $count;
+        return new BatchTransaction($this, $count);
+    }
 
-            if ($this->args['offset'] >= $everything) {
-                break;
-            }
-        }
+    public function incrementOffset($offset = 0)
+    {
+        isset($this->args['offset']) ? $this->args['offset'] += $offset : $this->args['offset'] = 0;
     }
 
     /**
@@ -105,7 +101,7 @@ class RequestTransaction
      * Querying API for a data
      * @return Api
      */
-    private function fetchData()
+    public function fetchData()
     {
         if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();

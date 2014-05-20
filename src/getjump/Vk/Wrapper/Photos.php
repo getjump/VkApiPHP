@@ -24,6 +24,16 @@ class Photos extends BaseWrapper
     }
 
     /**
+     * @return UploadUrl
+     */
+    public function getMessagesUploadServer()
+    {
+        return $this->vk
+            ->request('photos.getMessagesUploadServer')
+            ->one();
+    }
+
+    /**
      * todo Process response
      * @param UploadResponse $data
      */
@@ -35,6 +45,15 @@ class Photos extends BaseWrapper
             ->param('photos_list', $data->photos_list)
             ->param('hash', $data->hash)
             ->request('photos.save')->execute();
+    }
+
+    public function saveMessagesPhoto($data)
+    {
+        return $this->vk
+            ->param('photo', $data->photo)
+            ->param('hash', $data->hash)
+            ->param('server', $data->server)
+            ->request('photos.saveMessagesPhoto')->one();
     }
 
     public function uploadAlbum(array $files = array(), $album = false, $group = false)
@@ -52,5 +71,16 @@ class Photos extends BaseWrapper
         }
         $response = $this->guzzle->send($request);
         $this->save($response->json(['object' => 1]));
+    }
+
+    public function uploadMessages($file)
+    {
+        $server = $this->getMessagesUploadServer();
+        var_dump($server);
+        $request = $this->guzzle->createRequest('POST', $server->upload_url);
+        $postBody = $request->getBody();
+        $postBody->addFile(new PostFile('photo', fopen($file, 'r')));
+        $response = $this->guzzle->send($request);
+        return $this->saveMessagesPhoto($response->json(['object' => 1]));
     }
 }

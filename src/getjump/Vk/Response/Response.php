@@ -86,7 +86,7 @@ class Response
         if (!$id) {
             if (is_array($this->data)) {
                 return $this->data[0];
-            } elseif(isset($this->items)) {
+            } elseif(isset($this->items) && $this->items !== false) {
                 return $this->items[0];
             } else {
                 return $this->data;

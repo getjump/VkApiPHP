@@ -17,5 +17,7 @@ class UserFields
         SEX = 'sex',
         PHOTO_MAX_ORIG = 'photo_max_orig',
         VERIFIED = 'verified',
-        STATUS = 'status';
+        STATUS = 'status',
+        HAS_MOBILE = 'has_mobile',
+        CONTACTS = 'contacts';
 }
