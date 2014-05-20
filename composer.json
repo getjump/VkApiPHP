@@ -13,6 +13,9 @@
         "guzzlehttp/guzzle": "4.*",
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "4.1.*"
+    },
     "autoload": {
         "psr-4": {
             "getjump\\Vk\\": "src/getjump/Vk/"
