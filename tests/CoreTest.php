@@ -7,9 +7,9 @@ class CoreTest extends PHPUnit_Framework_TestCase
         $x = function () {
             return 'test';
         };
-        $vk = \getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken('test')->createAs($x);
+        $vk = \getjump\Vk\Core::getInstance()->apiVersion('5.5')->createAs($x);
         $this->assertInstanceOf('\getjump\Vk\Core', $vk);
-        $rT = $vk->request('test');
+        $rT = $vk->request('users.get', ['user_id' => 1]);
         $this->assertInstanceOf('\getjump\Vk\RequestTransaction', $rT);
         $this->assertArrayHasKey('v', $rT->args);
         $js = $rT->toJs();
