@@ -1,12 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: getju_000
- * Date: 07.05.14
- * Time: 15:51
- */
-
-require '../vendor/autoload.php';
 
 class UserTest extends PHPUnit_Framework_TestCase
 {

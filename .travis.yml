@@ -9,4 +9,4 @@ php:
   - 5.6
   - hhvm
 
-script: phpunit tests
+script: phpunit --bootstrap vendor/autoload.php tests
