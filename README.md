@@ -1,5 +1,7 @@
 # Vk API PHP
 
+[![Build Status](https://travis-ci.org/getjump/VkApiPHP.svg?branch=master)](https://travis-ci.org/getjump/VkApiPHP)
+
 That library will help you organize your work with API Vk.com
 
 ## Installation
