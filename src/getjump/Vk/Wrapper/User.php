@@ -34,11 +34,14 @@ class User extends BaseWrapper
     }
 
     /**
-     * @param int $bitmask
-     * @return string
+     * @param bool|array $data
+     * @return bool|string
      */
-    public function fieldsToString($data)
+    public function fieldsToString($data = false)
     {
+        if (!is_array($data)) {
+            return false;
+        }
         return implode(',', $data);
     }
 }
