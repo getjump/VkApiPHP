@@ -9,6 +9,7 @@ class BatchTransaction implements \Iterator
     private $position = 0;
     private $count = 0;
     private $transaction = null;
+    private $eof = false;
 
     public function __construct(RequestTransaction $transaction, $count = 0)
     {
@@ -26,7 +27,10 @@ class BatchTransaction implements \Iterator
     public function current()
     {
         $this->transaction->incrementOffset($this->position * $this->count);
-        return $this->transaction->fetchData();
+        $d = $this->transaction->fetchData();
+        $count = sizeof($d->response->items);
+        $this->eof = $count > 0 && $count >= $this->count ? false : true;
+        return $d;
     }
 
     /**
@@ -60,7 +64,7 @@ class BatchTransaction implements \Iterator
      */
     public function valid()
     {
-        return true;
+        return !$this->eof;
     }
 
     /**

@@ -22,23 +22,12 @@ $user->get(15157875, [U::FIRST_NAME, U::LAST_NAME, U::STATUS])
 */
 
 $vk = \getjump\Vk\Core::getInstance()->setLang('en')->apiVersion('5.21');
-$vk->createAs(
-    function ($data) {
-        return new \getjump\Vk\Model\Wall($data);
-    }
-);
-/**
- * @var $wall \getjump\Vk\Model\Wall
- */
-$wall = $vk->request(
-    'wall.getById',
-    ['posts' => '-32295218_159462', 'extended' => 1, 'copy_history_depth' => 5]
-)->one();
-print $wall->getId() . PHP_EOL;
 
-$i = 0;
+$friends = $vk->request('friends.get', ['user_id' => 1, 'fields' => 'first_name, last_name']);
 
-while (($d=$wall->getSource($i)) !== false) {
-    print $d->getId() . PHP_EOL;
-    $i++;
+foreach($friends->batch(100) as $friend)
+{
+    $friend->each(function($k, $v) {
+        var_dump($v);
+    });
 }
