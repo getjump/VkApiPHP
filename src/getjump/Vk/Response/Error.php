@@ -26,10 +26,9 @@ class Error
      */
     public function __construct($error)
     {
-        $this->error_msg = $error->error_msg;
-        $this->error_code = $error->error_code;
-        $this->request_params = $error->request_params;
-        throw new Exception\Error($error->error_msg, $error->error_code);
+        foreach($error as $k => $v)
+            $this->{$k} = $v;
+        throw new Exception\Error($error->error_msg, $error->error_code, $this);
     }
 
     /**

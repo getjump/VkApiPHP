@@ -12,8 +12,14 @@ use Exception;
 
 class Error extends Exception
 {
-    public function __construct($message = "", $code = 0)
+    /**
+     * @var \getjump\Vk\Response\Error|bool
+     */
+    public $error = false;
+
+    public function __construct($message = "", $code = 0, \getjump\Vk\Response\Error $e)
     {
+        $this->error = $e;
         $this->message = $message;
         $this->code = $code;
     }
