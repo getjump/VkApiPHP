@@ -225,3 +225,5 @@ pip-log.txt
 composer.phar
 composer.lock
 /vendor/
+
+test.php
