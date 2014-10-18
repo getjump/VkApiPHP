@@ -145,7 +145,7 @@ class Auth
     /**
      * Method converts code to token
      * @param $code
-     * @return bool
+     * @return \getjump\Vk\Response\Auth|bool
      */
     public function getToken($code)
     {
