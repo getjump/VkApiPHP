@@ -127,7 +127,7 @@ class Auth
 
     /**
      * Will return token if everything is OK
-     * @return bool|string
+     * @return \getjump\Vk\Response\Auth|bool|string
      */
     public function startCallback()
     {
