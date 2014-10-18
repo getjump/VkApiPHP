@@ -164,8 +164,7 @@ class Auth
         $data = $this->guzzle->get($uri)->json(['object' => true]);
 
         if (isset($data->access_token)) {
-            // POSSIBLY WE SHOULD RETURN OBJECT, WITH USER_ID AND EXPIRES IN, NOT ONLY TOKEN
-            return $data->access_token;
+            return new \getjump\Vk\Response\Auth($data->access_token, $data->expires_in, $data->user_id);
         } elseif (isset($data->error)) {
             // ERROR PROCESSING
         }
