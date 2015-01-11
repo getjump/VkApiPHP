@@ -38,7 +38,7 @@ class RequestTransaction
 
     /**
      * @param string $methodName
-     * @param bool $args
+     * @param array|bool $args
      * @param bool $accessToken
      * @param bool $callback
      */

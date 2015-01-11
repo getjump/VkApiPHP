@@ -11,7 +11,7 @@ use getjump\Vk\Response\Api;
  */
 class Core
 {
-    private $params;
+    private $params = [];
 
     private $lang = false;
     private $version = false;
@@ -76,6 +76,9 @@ class Core
         if (is_array($args)) {
             $this->params($args);
         }
+
+        $this->params = array_merge($this->params, $this->systemArgs());
+
         $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback);
         $this->reset();
 
@@ -84,9 +87,18 @@ class Core
 
     public function reset()
     {
-        $this->params = false;
-        $this->param('lang', $this->lang);
-        $this->param('v', $this->version);
+        $this->params = [];
+    }
+
+    private function systemArgs()
+    {
+        $array = [];
+
+        if($this->lang)
+            $array['lang'] = $array;
+        if($this->version)
+            $array['v'] = $this->version;
+        return $array;
     }
 
     /**
@@ -104,7 +116,6 @@ class Core
     public function setLang($lang)
     {
         $this->lang = $lang;
-        $this->param('lang', $this->lang);
         return $this;
     }
 
@@ -115,8 +126,7 @@ class Core
      */
     public function apiVersion($version)
     {
-        $this->params['v'] = $version;
-
+        $this->version = $version;
         return $this;
     }
 
