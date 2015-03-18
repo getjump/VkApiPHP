@@ -65,13 +65,13 @@ class Photos extends BaseWrapper
     /**
      * Uploading photos in album
      *
-     * @param array $files array with file paths, which you want to upload to an album
+     * @param array $listOfFilePaths array with file paths, which you want to upload to an album
      * @param bool|int|string $album_id ID of album. Album for uploading files
      * @param bool|int|string $group_id ID of group. Group which belongs album (optional)
      */
-    public function uploadAlbum(array $files = [], $album_id = false, $group_id = false)
+    public function uploadAlbum(array $listOfFilePaths = [], $album_id = false, $group_id = false)
     {
-        if (sizeof($files) > 5 || sizeof($files) == 0) {
+        if (sizeof($listOfFilePaths) > 5 || sizeof($listOfFilePaths) == 0) {
             // todo Exception
         }
 
@@ -81,8 +81,8 @@ class Photos extends BaseWrapper
         /** @var PostBody $postBody */
         $postBody = $request->getBody();
         $fileIndex = 1;
-        foreach ($files as $file) {
-            $postBody->addFile(new PostFile('file' . $fileIndex, fopen($file, 'r')));
+        foreach ($listOfFilePaths as $filePath) {
+            $postBody->addFile(new PostFile('file' . $fileIndex, fopen($filePath, 'r')));
             $fileIndex++;
         }
         $response = $this->guzzle->send($request);
