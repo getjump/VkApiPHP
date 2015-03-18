@@ -80,8 +80,10 @@ class Photos extends BaseWrapper
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
         /** @var PostBody $postBody */
         $postBody = $request->getBody();
-        foreach ($files as $k => $file) {
-            $postBody->addFile(new PostFile('file' . ($k + 1), fopen($file, 'r')));
+        $fileIndex = 1;
+        foreach ($files as $file) {
+            $postBody->addFile(new PostFile('file' . $fileIndex, fopen($file, 'r')));
+            $fileIndex++;
         }
         $response = $this->guzzle->send($request);
         $this->save($response->json(['object' => 1]));
