@@ -4,6 +4,7 @@ namespace getjump\Vk\Wrapper;
 
 use getjump\Vk\Model\Photos\UploadResponse;
 use getjump\Vk\Model\Photos\UploadUrl;
+use GuzzleHttp\Post\PostBody;
 use GuzzleHttp\Post\PostFile;
 
 class Photos extends BaseWrapper
@@ -61,7 +62,14 @@ class Photos extends BaseWrapper
             ->request('photos.saveMessagesPhoto')->one();
     }
 
-    public function uploadAlbum(array $files = array(), $album = false, $group = false)
+    /**
+     * Uploading photos in album
+     *
+     * @param array $files array with file paths, which you want to upload to an album
+     * @param bool|int|string $album ID of album. Album for uploading files
+     * @param bool|int|string $group ID of group. Group which belongs album (optional)
+     */
+    public function uploadAlbum(array $files = [], $album = false, $group = false)
     {
         if (sizeof($files) > 5 || sizeof($files) == 0) {
             // todo Exception
@@ -70,6 +78,7 @@ class Photos extends BaseWrapper
         $server = $this->getUploadServer($album, $group);
 
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
+        /** @var PostBody $postBody */
         $postBody = $request->getBody();
         foreach ($files as $k => $file) {
             $postBody->addFile(new PostFile('file' . ($k + 1), fopen($file, 'r')));
@@ -81,7 +90,6 @@ class Photos extends BaseWrapper
     public function uploadMessages($file)
     {
         $server = $this->getMessagesUploadServer();
-        var_dump($server);
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
         $postBody = $request->getBody();
         $postBody->addFile(new PostFile('photo', fopen($file, 'r')));
