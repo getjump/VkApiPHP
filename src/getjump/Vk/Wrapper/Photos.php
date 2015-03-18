@@ -66,16 +66,16 @@ class Photos extends BaseWrapper
      * Uploading photos in album
      *
      * @param array $files array with file paths, which you want to upload to an album
-     * @param bool|int|string $album ID of album. Album for uploading files
-     * @param bool|int|string $group ID of group. Group which belongs album (optional)
+     * @param bool|int|string $album_id ID of album. Album for uploading files
+     * @param bool|int|string $group_id ID of group. Group which belongs album (optional)
      */
-    public function uploadAlbum(array $files = [], $album = false, $group = false)
+    public function uploadAlbum(array $files = [], $album_id = false, $group_id = false)
     {
         if (sizeof($files) > 5 || sizeof($files) == 0) {
             // todo Exception
         }
 
-        $server = $this->getUploadServer($album, $group);
+        $server = $this->getUploadServer($album_id, $group_id);
 
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
         /** @var PostBody $postBody */
