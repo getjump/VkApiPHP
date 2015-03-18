@@ -27,6 +27,7 @@ class Api
     }
 
     /**
+     * Execute callable on every element of array
      * @param bool|callable $callback
      */
     public function each($callback = false)
@@ -34,22 +35,38 @@ class Api
         $this->response->each($callback);
     }
 
+    /**
+     * Try to get one element
+     * @return mixed
+     */
     public function one()
     {
         return $this->response->one();
     }
 
+    /**
+     * Magic method for calling functions on api response
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
         return call_user_func_array([$this->response, $name], $arguments);
     }
 
+    /**
+     * Magic method for accessing api response
+     * @param $name
+     * @return bool
+     */
     public function __get($name)
     {
         return $this->response->{$name};
     }
 
     /**
+     * Return ApiResponse
      * @return array|bool
      */
     public function getResponse()

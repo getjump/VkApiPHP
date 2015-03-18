@@ -15,6 +15,7 @@ class User extends BaseWrapper
 
 
     /**
+     * Get user with $userId
      * @param $userId
      * @param bool|array $fields
      * @return RequestTransaction|Api

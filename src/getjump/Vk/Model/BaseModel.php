@@ -10,7 +10,7 @@ namespace getjump\Vk\Model;
 
 /**
  * Class BaseModel
- * Your models for data interpreting should extends this class.
+ * Your models for data interpreting should extends this class
  * @package getjump\Vk\Model
  */
 class BaseModel

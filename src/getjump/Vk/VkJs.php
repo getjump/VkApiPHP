@@ -13,23 +13,34 @@ use stdClass;
 
 /**
  * Class VkJs
+ * Used to construct pseudo JavaScript
  * @package getjump\Vk
  */
 class VkJs
 {
 
     /**
+     * Will contain pseudo JavaScript
      * @var bool|string
      */
     public $dataString = false;
 
     /**
+     * Here we store instances of requests
      * @var bool|array
      */
     private $requests = false;
 
+    /**
+     * Instance of Core class
+     * @var bool|Core
+     */
     private $vk = false;
 
+    /**
+     * Callable that used against every element in returning array
+     * @var bool
+     */
     private $callback = false;
 
     /**

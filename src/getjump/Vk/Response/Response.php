@@ -23,7 +23,7 @@ class Response
     public $count = false;
 
     /**
-     * They can return just an response array, faggots
+     * They can return just an response array
      *
      * @var bool|array
      */
@@ -78,7 +78,8 @@ class Response
     }
 
     /**
-     * @param bool $id
+     * This method will return one element if id is not specified or element of array otherwise
+     * @param bool|int $id
      * @return mixed
      */
     public function get($id = false)
@@ -96,6 +97,11 @@ class Response
         }
     }
 
+    /**
+     * This magic method try to return field from response
+     * @param $name
+     * @return bool
+     */
     public function __get($name)
     {
         if (!is_array($this->data)) {
@@ -108,12 +114,17 @@ class Response
         return false;
     }
 
+    /**
+     * Just wrap over Response->get()
+     * @return mixed
+     */
     public function one()
     {
         return $this->get();
     }
 
     /**
+     * This method return raw Response->data
      * @return array|bool
      */
     public function getResponse()

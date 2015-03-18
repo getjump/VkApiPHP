@@ -11,8 +11,6 @@ use getjump\Vk\Model;
  */
 class LongPoll extends BaseWrapper
 {
-    //Really? Why should we move that stuff to constants just for one call?
-    //Looks ugly
     const URL_CONNECTION_INFO = 'http://%s?act=a_check&key=%s&ts=%s&wait=25&mode=2';
     const LONG_POOL_REQUEST_METHOD = 'messages.getLongPollServer';
 
@@ -20,6 +18,7 @@ class LongPoll extends BaseWrapper
     public $userMap = [];
 
     /**
+     * Return connection info for long polling
      * @param $d
      * @return string
      */
@@ -29,6 +28,7 @@ class LongPoll extends BaseWrapper
     }
 
     /**
+     * Get connection info for long polling from api
      * @return array|bool
      */
     public function getServerData()
@@ -36,6 +36,10 @@ class LongPoll extends BaseWrapper
         return $this->vk->request(self::LONG_POOL_REQUEST_METHOD)->response->getResponse();
     }
 
+    /**
+     * LongPoll loop
+     * @todo make something other than putting data to STDOUT
+     */
     public function doLoop()
     {
         $server = $this->getServerData();

@@ -4,6 +4,11 @@ namespace getjump\Vk;
 
 use getjump\Vk\Response\Api;
 
+/**
+ * Class BatchTransaction
+ * Used for processing data from api methods that supports count and offset
+ * @package getjump\Vk
+ */
 class BatchTransaction implements \Iterator
 {
     private $position = 0;

@@ -9,14 +9,24 @@
 namespace getjump\Vk\Wrapper;
 
 
+/**
+ * Class Account
+ * Account wrapper
+ * @package getjump\Vk\Wrapper
+ */
 class Account extends BaseWrapper
 {
+    /**
+     * Returns current app permission
+     * @return array|bool|mixed
+     */
     public function getAppPermissions()
     {
         return $this->vk->request('account.getAppPermissions')->response->data;
     }
 
     /**
+     * Used to validate rights
      * @param $permissions
      * @param int|array $bitmask
      * @return int

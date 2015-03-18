@@ -16,8 +16,20 @@ use getjump\Vk\Exception;
  */
 class Error
 {
+    /**
+     * Will contain error message from Vk
+     * @var
+     */
     public $error_msg;
+    /**
+     * Will contain error code from Vk
+     * @var
+     */
     public $error_code;
+    /**
+     * Will contain request params from Vk
+     * @var array
+     */
     public $request_params = array();
 
     /**

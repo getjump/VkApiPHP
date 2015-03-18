@@ -20,6 +20,7 @@ use getjump\Vk\Response\Api;
 class Friends extends BaseWrapper
 {
     /**
+     * Return friends of a user with $userId
      * @param int|string $userId
      * @param bool $fields
      * @return Api|RequestTransaction
@@ -38,6 +39,7 @@ class Friends extends BaseWrapper
     /**
      * @param $data
      * @return null|string
+     * @todo Put this to another place (duplicate with User)
      */
     public function fieldsToString($data)
     {

@@ -23,17 +23,39 @@ class RequestTransaction
      */
     const URL_VK_API = 'https://api.vk.com/method/';
 
+    /**
+     * This variable get magic works
+     * @var bool
+     */
     private $init = false;
 
     /**
+     * Instance of GuzzleHttp\Client
      * @var \GuzzleHttp\Client
      */
     private $guzzle = false;
 
+    /**
+     * Here we store Access Token
+     * @var bool
+     */
     private $accessToken = false;
 
+    /**
+     * Here we store Method Name
+     * @var bool|string
+     */
     private $methodName = false;
+    /**
+     * Here we store arguments
+     * @var array|bool
+     */
     private $args = array();
+
+    /**
+     * This one is needed to convert every element of array response to something another
+     * @var bool
+     */
     private $callback = false;
 
     /**

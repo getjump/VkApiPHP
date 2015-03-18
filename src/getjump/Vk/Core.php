@@ -11,14 +11,38 @@ use getjump\Vk\Response\Api;
  */
 class Core
 {
+    /**
+     * Arguments array
+     * @var array
+     */
     private $params = [];
 
+    /**
+     * Define language that API will return responses in
+     * @var bool|string
+     */
     private $lang = false;
+    /**
+     * Define version of API interfaces
+     * @var bool|string
+     */
     private $version = false;
+    /**
+     * Define access token
+     * @var bool|string
+     */
     private $accessToken = false;
 
+    /**
+     * Callable that used against every element in returning array
+     * @var bool|Callable
+     */
     public $callback = false;
 
+    /**
+     * Callable that used against every element in returning array if VkJs was used
+     * @var bool|Callable
+     */
     public $jsCallback = false;
 
     /**
@@ -85,11 +109,18 @@ class Core
         return $d;
     }
 
+    /**
+     * Clear current params
+     */
     public function reset()
     {
         $this->params = [];
     }
 
+    /**
+     * Set necessary arguments
+     * @return array
+     */
     private function systemArgs()
     {
         $array = [];

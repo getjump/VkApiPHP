@@ -9,6 +9,7 @@ namespace getjump\Vk\Model;
 class User extends BaseModel
 {
     /**
+     * Return users first name and second name that concatenated with space
      * @return string
      */
     public function getName()
@@ -16,29 +17,37 @@ class User extends BaseModel
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    /**
+     * Return users status
+     * @return Status
+     */
     public function getStatus()
     {
-        return $this->status;
+        return new Status($this->status);
     }
 
-    public function getStatusAudio()
-    {
-        if (!$this->status_audio) {
-            return false;
-        }
-        return new StatusAudio($this->status_audio);
-    }
-
+    /**
+     * Return user mobile phone
+     * @return string|bool
+     */
     public function getMobile()
     {
         return $this->mobile_phone;
     }
 
+    /**
+     * Return user home phone
+     * @return string|bool
+     */
     public function getPhone()
     {
         return $this->home_phone;
     }
 
+    /**
+     * Return true if user has mobile
+     * @return bool
+     */
     public function hasMobile()
     {
         return $this->has_mobile;
