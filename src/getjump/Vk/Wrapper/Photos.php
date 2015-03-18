@@ -35,7 +35,7 @@ class Photos extends BaseWrapper
 
     /**
      * todo Process response
-     * @param UploadResponse $data
+     * @param UploadResponse $data structure of response of uploading-photos-request
      */
     public function save($data)
     {
@@ -43,8 +43,13 @@ class Photos extends BaseWrapper
             ->param('album_id', $data->aid)
             ->param('server', $data->server)
             ->param('photos_list', $data->photos_list)
-            ->param('hash', $data->hash)
-            ->request('photos.save')->execute();
+            ->param('hash', $data->hash);
+
+        if (!empty($data->gid)) {
+            $this->vk->param('group_id', $data->gid);
+        }
+
+        $this->vk->request('photos.save')->execute();
     }
 
     public function saveMessagesPhoto($data)
