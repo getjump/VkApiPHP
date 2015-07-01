@@ -134,7 +134,8 @@ class RequestTransaction
             $args['access_token'] = $this->accessToken;
         }
 
-        $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['form_params' => $args])->json(['object' => true]);
+        $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['form_params' => $args])->getBody();
+        $data = json_decode($data);
         $c = new Api($data, $this->callback);
 
         return $c;
