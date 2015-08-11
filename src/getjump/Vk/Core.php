@@ -34,6 +34,12 @@ class Core
     private $accessToken = false;
 
     /**
+     * Define secret for nohttps requests
+     * @var bool|string
+     */
+    private $noHttpsSecret = false;
+
+    /**
      * Callable that used against every element in returning array
      * @var bool|Callable
      */
@@ -103,7 +109,7 @@ class Core
 
         $this->params = array_merge($this->params, $this->systemArgs());
 
-        $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback);
+        $d = new RequestTransaction($methodName, $this->params, $this->accessToken, $this->callback, $this->noHttpsSecret);
         $this->reset();
 
         return $d;
@@ -140,6 +146,18 @@ class Core
     public function setToken($accessToken)
     {
         $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Sets nohttps secret
+     * @param string $noHttpsSecret
+     * @return $this
+     */
+    public function setNoHttpsSecret($noHttpsSecret)
+    {
+        $this->noHttpsSecret = $noHttpsSecret;
 
         return $this;
     }
