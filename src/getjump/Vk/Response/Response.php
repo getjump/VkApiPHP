@@ -72,9 +72,12 @@ class Response
         }
         $data = false;
         $this->items ? $data = & $this->items : (!$this->data ? : $data = & $this->data);
-        foreach ($data as $k => $v) {
-            call_user_func_array($callback, [$k, $v]);
-        }
+
+		if ($data !== false) {
+			foreach ($data as $k => $v) {
+				call_user_func_array($callback, [$k, $v]);
+			}
+		}
     }
 
     /**
