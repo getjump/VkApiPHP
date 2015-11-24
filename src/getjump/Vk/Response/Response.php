@@ -21,6 +21,7 @@ class Response
      */
     public $items = false;
     public $count = false;
+	public $nextFrom = false;
 
     /**
      * They can return just an response array
@@ -43,7 +44,10 @@ class Response
         } else {
             $this->items = !isset($data->items) ? false : $data->items;
         }
+
         $this->count = !isset($data->count) ? false : $data->count;
+		$this->nextFrom = !isset($data->next_from) ? false : $data->next_from;
+
         if (is_array($data) || !isset($data->items)) {
             $this->count = sizeof($data);
             if (is_array($data) && is_callable($callback)) {
