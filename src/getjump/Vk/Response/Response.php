@@ -70,7 +70,7 @@ class Response
         if (!is_callable($callback)) {
             return;
         }
-        $data = false;
+        $data = [];
         $this->items ? $data = & $this->items : (!$this->data ? : $data = & $this->data);
         foreach ($data as $k => $v) {
             call_user_func_array($callback, [$k, $v]);
