@@ -59,17 +59,25 @@ class RequestTransaction
     private $callback = false;
 
     /**
+     * Secret for nohttps requests
+     * @var bool|string
+     */
+    private $noHttpsSecret = false;
+
+    /**
      * @param string $methodName
      * @param array|bool $args
      * @param bool $accessToken
      * @param bool $callback
+     * @param bool|string $noHttpsSecret
      */
-    public function __construct($methodName, $args = false, $accessToken = false, $callback = false)
+    public function __construct($methodName, $args = false, $accessToken = false, $callback = false, $noHttpsSecret = false)
     {
         $this->methodName = $methodName;
         $this->args = $args;
         $this->accessToken = $accessToken;
         $this->callback = $callback;
+        $this->noHttpsSecret = $noHttpsSecret;
     }
 
     /**
@@ -132,6 +140,10 @@ class RequestTransaction
         $args = $this->args;
         if ($this->accessToken) {
             $args['access_token'] = $this->accessToken;
+        }
+
+        if ((empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') && false !== $this->noHttpsSecret) {
+            $args['sig'] = md5('/method/' . $this->methodName . '?' . http_build_query($args) . $this->noHttpsSecret);
         }
 
         $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['body' => $args])->json(['object' => true]);
