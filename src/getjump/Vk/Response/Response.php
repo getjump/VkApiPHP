@@ -30,6 +30,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     public $data = false;
 
     private $pointer = 0;
+    private $extendedFields = [];
 
     /**
      * Response constructor
@@ -38,6 +39,15 @@ class Response implements \ArrayAccess, \Countable, \Iterator
      */
     public function __construct($data, $callback = false)
     {
+        foreach($data as $key => $value)
+        {
+            if(property_exists($this, $key))
+                continue;
+
+            $this->{$key} = $value;
+            $this->extendedFields[] = $key;
+        }
+
         if (is_callable($callback) && isset($data->items)) {
             foreach ($data->items as $d) {
                 $this->items[] = call_user_func_array($callback, [$d]);
@@ -103,6 +113,18 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         } else {
             return $this->data[$id];
         }
+    }
+
+    public function extended()
+    {
+        $temp = [];
+
+        foreach($this->extendedFields as $key)
+        {
+            $temp[$key] = $this->{$key};
+        }
+
+        return (object)$temp;
     }
 
     /**
