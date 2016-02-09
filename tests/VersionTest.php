@@ -7,7 +7,7 @@ class VersionTest extends PHPUnit_Framework_TestCase {
         $vk->apiVersion('5.27');
         $v1 = $v2 = false;
         try {
-            $vk->request('users.get')->one();
+            $vk->request('users.get', ['user_id' => 'test'])->one();
         } catch(\getjump\Vk\Exception\Error $e)
         {
             foreach($e->error->request_params as &$p)
@@ -18,10 +18,10 @@ class VersionTest extends PHPUnit_Framework_TestCase {
                     break;
                 }
             }
-            $this->assertEquals(113, $e->getCode());
+            $this->assertEquals(100, $e->getCode());
         }
         try {
-            $obj2 = $vk->request('users.get')->one();
+            $obj2 = $vk->request('users.get', ['user_id' => 'test'])->one();
         } catch(\getjump\Vk\Exception\Error $e)
         {
             foreach($e->error->request_params as &$p)
@@ -32,7 +32,7 @@ class VersionTest extends PHPUnit_Framework_TestCase {
                     break;
                 }
             }
-            $this->assertEquals(113, $e->getCode(), 'Error code doesn\'t equal');
+            $this->assertEquals(100, $e->getCode(), 'Error code doesn\'t equal');
             $this->assertEquals('5.27', $v1);
             $this->assertEquals('5.27', $v2);
         }
