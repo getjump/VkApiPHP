@@ -121,9 +121,10 @@ class RequestTransaction
 
     /**
      * Querying API for a data
+     * @param bool $src if the truth is to get the source data
      * @return Api
      */
-    public function fetchData()
+    public function fetchData($src = false)
     {
         if (!$this->guzzle) {
             $this->guzzle = new \GuzzleHttp\Client();
@@ -135,9 +136,8 @@ class RequestTransaction
         }
 
         $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['body' => $args])->json(['object' => true]);
-        $c = new Api($data, $this->callback);
-
-        return $c;
+        
+        return $src ? $data : new Api($data, $this->callback);
     }
 
     /**
