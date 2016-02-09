@@ -14,7 +14,7 @@ use Closure;
  * Class Response
  * @package getjump\Vk\Response
  */
-class Response
+class Response implements \ArrayAccess, \Countable, \Iterator
 {
     /**
      * @var bool|array
@@ -28,6 +28,8 @@ class Response
      * @var bool|array
      */
     public $data = false;
+
+    private $pointer = 0;
 
     /**
      * Response constructor
@@ -54,6 +56,12 @@ class Response
                 $this->data = $data;
             }
         }
+
+        // TODO: Avoid hack
+        if($this->data)
+            $this->items = &$this->data;
+        if($this->items)
+            $this->data = &$this->items;
 
         if(is_object($data) && is_callable($callback))
         {
@@ -130,5 +138,55 @@ class Response
     public function getResponse()
     {
         return $this->data;
+    }
+
+    public function offsetExists($offset)
+    {
+        return isset($this->items[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->items[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->itmes[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->items[$offset]);
+    }
+
+    public function count()
+    {
+        return count($this->items);
+    }
+
+    public function rewind()
+    {
+        $this->pointer = 0;
+    }
+
+    public function current()
+    {
+        return $this->items[$this->pointer];
+    }
+
+    public function key()
+    {
+        return $this->pointer;
+    }
+
+    public function next()
+    {
+        $this->pointer++;
+    }
+
+    public function valid()
+    {
+        return isset($this[$this->pointer]);
     }
 }
