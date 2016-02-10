@@ -21,6 +21,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
      */
     public $items = false;
     public $count = false;
+	public $nextFrom = false;
 
     /**
      * They can return just an response array
@@ -55,7 +56,10 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         } else {
             $this->items = !isset($data->items) ? false : $data->items;
         }
+
         $this->count = !isset($data->count) ? false : $data->count;
+		$this->nextFrom = !isset($data->next_from) ? false : $data->next_from;
+
         if (is_array($data) || !isset($data->items)) {
             $this->count = sizeof($data);
             if (is_array($data) && is_callable($callback)) {
@@ -90,8 +94,11 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         }
         $data = [];
         $this->items ? $data = & $this->items : (!$this->data ? : $data = & $this->data);
-        foreach ($data as $k => $v) {
-            call_user_func_array($callback, [$k, $v]);
+
+        if ($data !== false) {
+            foreach ($data as $k => $v) {
+                call_user_func_array($callback, [$k, $v]);
+            }
         }
     }
 
