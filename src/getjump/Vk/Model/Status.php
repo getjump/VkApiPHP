@@ -4,13 +4,13 @@ namespace getjump\Vk\Model;
 
 /**
  * Class Status
- * Wrapper for accessing user status
- * @package getjump\Vk\Model
+ * Wrapper for accessing user status.
  */
 class Status extends BaseModel
 {
     /**
-     * Return text status if instance was tried to used as string
+     * Return text status if instance was tried to used as string.
+     *
      * @return string
      */
     public function __toString()
@@ -19,7 +19,8 @@ class Status extends BaseModel
     }
 
     /**
-     * Get current audio that user is listening for
+     * Get current audio that user is listening for.
+     *
      * @return bool|StatusAudio
      */
     public function getAudio()
@@ -27,6 +28,7 @@ class Status extends BaseModel
         if ($this->audio !== false) {
             return new StatusAudio($this->audio);
         }
+
         return false;
     }
 }

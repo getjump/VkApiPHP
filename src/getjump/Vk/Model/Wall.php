@@ -4,13 +4,13 @@ namespace getjump\Vk\Model;
 
 /**
  * Class Wall
- * Used to work with wall
- * @package getjump\Vk\Model
+ * Used to work with wall.
  */
 class Wall extends BaseModel
 {
     /**
-     * Return wall id
+     * Return wall id.
+     *
      * @return int|bool
      */
     public function getId()
@@ -19,7 +19,8 @@ class Wall extends BaseModel
     }
 
     /**
-     * Return true if this is repost
+     * Return true if this is repost.
+     *
      * @return bool
      */
     public function isRepost()
@@ -28,14 +29,21 @@ class Wall extends BaseModel
     }
 
     /**
-     * Return recursive wall instance
+     * Return recursive wall instance.
+     *
      * @param int $id
+     *
      * @return bool|Wall
      */
     public function getSource($id = 0)
     {
-        if($this->copy_history === false) return false;
-        if(!isset($this->copy_history[$id])) return false;
-        return new Wall($this->copy_history[0 + $id]);
+        if ($this->copy_history === false) {
+            return false;
+        }
+        if (!isset($this->copy_history[$id])) {
+            return false;
+        }
+
+        return new self($this->copy_history[0 + $id]);
     }
 }

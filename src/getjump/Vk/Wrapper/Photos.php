@@ -8,10 +8,10 @@ use GuzzleHttp\Post\PostFile;
 
 class Photos extends BaseWrapper
 {
-
     /**
      * @param $album
      * @param bool $group
+     *
      * @return UploadUrl
      */
     public function getUploadServer($album, $group = false)
@@ -34,7 +34,8 @@ class Photos extends BaseWrapper
     }
 
     /**
-     * todo Process response
+     * todo Process response.
+     *
      * @param UploadResponse $data
      */
     public function save($data)
@@ -56,9 +57,9 @@ class Photos extends BaseWrapper
             ->request('photos.saveMessagesPhoto')->one();
     }
 
-    public function uploadAlbum(array $files = array(), $album = false, $group = false)
+    public function uploadAlbum(array $files = [], $album = false, $group = false)
     {
-        if (sizeof($files) > 5 || sizeof($files) == 0) {
+        if (count($files) > 5 || count($files) == 0) {
             // todo Exception
         }
 
@@ -67,7 +68,7 @@ class Photos extends BaseWrapper
         $request = $this->guzzle->createRequest('POST', $server->upload_url);
         $postBody = $request->getBody();
         foreach ($files as $k => $file) {
-            $postBody->addFile(new PostFile('file' . ($k + 1), fopen($file, 'r')));
+            $postBody->addFile(new PostFile('file'.($k + 1), fopen($file, 'r')));
         }
         $response = $this->guzzle->send($request);
         $this->save($response->json(['object' => 1]));
@@ -81,6 +82,7 @@ class Photos extends BaseWrapper
         $postBody = $request->getBody();
         $postBody->addFile(new PostFile('photo', fopen($file, 'r')));
         $response = $this->guzzle->send($request);
+
         return $this->saveMessagesPhoto($response->json(['object' => 1]));
     }
 }

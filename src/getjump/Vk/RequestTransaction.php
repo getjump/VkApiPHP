@@ -3,72 +3,76 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 03.05.14
- * Time: 12:19
+ * Time: 12:19.
  */
-
 namespace getjump\Vk;
 
-use Generator;
 use getjump\Vk\Response\Api;
 
 /**
  * Class RequestTransaction
- * Is used as last front between API and Library
- * @package getjump\Vk
+ * Is used as last front between API and Library.
  */
 class RequestTransaction
 {
     /**
-     * URL Api VK
+     * URL Api VK.
      */
     const URL_VK_API = 'https://api.vk.com/method/';
 
     /**
-     * This variable get magic works
+     * This variable get magic works.
+     *
      * @var bool
      */
     private $init = false;
 
     /**
-     * Instance of GuzzleHttp\Client
+     * Instance of GuzzleHttp\Client.
+     *
      * @var \GuzzleHttp\Client
      */
     private $guzzle = false;
 
     /**
-     * Here we store Access Token
+     * Here we store Access Token.
+     *
      * @var bool
      */
     private $accessToken = false;
 
     /**
-     * Here we store Method Name
+     * Here we store Method Name.
+     *
      * @var bool|string
      */
     private $methodName = false;
     /**
-     * Here we store arguments
+     * Here we store arguments.
+     *
      * @var array|bool
      */
-    private $args = array();
+    private $args = [];
 
     /**
-     * This one is needed to convert every element of array response to something another
+     * This one is needed to convert every element of array response to something another.
+     *
      * @var bool
      */
     private $callback = false;
 
     /**
-     * Secret for nohttps requests
+     * Secret for nohttps requests.
+     *
      * @var bool|string
      */
     private $noHttpsSecret = false;
 
     /**
-     * @param string $methodName
-     * @param array|bool $args
-     * @param bool $accessToken
-     * @param bool $callback
+     * @param string      $methodName
+     * @param array|bool  $args
+     * @param bool        $accessToken
+     * @param bool        $callback
      * @param bool|string $noHttpsSecret
      */
     public function __construct($methodName, $args = false, $accessToken = false, $callback = false, $noHttpsSecret = false)
@@ -81,8 +85,10 @@ class RequestTransaction
     }
 
     /**
-     * Batch method, for pulling just $count data at a time with foreach loop
+     * Batch method, for pulling just $count data at a time with foreach loop.
+     *
      * @param int $count
+     *
      * @return BatchTransaction
      */
     public function batch($count = 10)
@@ -99,8 +105,10 @@ class RequestTransaction
     }
 
     /**
-     * We are overriding get, so when we will try to access response, our data will get from a server
+     * We are overriding get, so when we will try to access response, our data will get from a server.
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function __get($name)
@@ -113,9 +121,11 @@ class RequestTransaction
     }
 
     /**
-     * We are overriding call, so when we will call to each, our data will get from a server
+     * We are overriding call, so when we will call to each, our data will get from a server.
+     *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return bool|mixed
      */
     public function __call($name, array $arguments)
@@ -128,7 +138,8 @@ class RequestTransaction
     }
 
     /**
-     * Querying API for a data
+     * Querying API for a data.
+     *
      * @return Api
      */
     public function fetchData()
@@ -143,17 +154,17 @@ class RequestTransaction
         }
 
         if ((empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') && false !== $this->noHttpsSecret) {
-            $args['sig'] = md5('/method/' . $this->methodName . '?' . http_build_query($args) . $this->noHttpsSecret);
+            $args['sig'] = md5('/method/'.$this->methodName.'?'.http_build_query($args).$this->noHttpsSecret);
         }
 
-        $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['body' => $args])->json(['object' => true]);
+        $data = $this->guzzle->post(self::URL_VK_API.$this->methodName, ['body' => $args])->json(['object' => true]);
         $c = new Api($data, $this->callback);
 
         return $c;
     }
 
     /**
-     * We want just execute, without getting any data
+     * We want just execute, without getting any data.
      */
     public function execute()
     {
@@ -161,7 +172,8 @@ class RequestTransaction
     }
 
     /**
-     * Will return VkJs object
+     * Will return VkJs object.
+     *
      * @return VkJs
      */
     public function toJs()

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 07.05.14
- * Time: 13:18
+ * Time: 13:18.
  */
-
 namespace getjump\Vk\Exception;
 
 use Exception;
@@ -17,7 +16,7 @@ class Error extends Exception
      */
     public $error = false;
 
-    public function __construct($message = "", $code = 0, \getjump\Vk\Response\Error $e)
+    public function __construct($message, $code, \getjump\Vk\Response\Error $e)
     {
         $this->error = $e;
         $this->message = $message;

@@ -6,56 +6,64 @@ use Closure;
 use getjump\Vk\Response\Api;
 
 /**
- * Class Core
- * @package getjump\Vk
+ * Class Core.
  */
 class Core
 {
     /**
-     * Arguments array
+     * Arguments array.
+     *
      * @var array
      */
     private $params = [];
 
     /**
-     * Define language that API will return responses in
+     * Define language that API will return responses in.
+     *
      * @var bool|string
      */
     private $lang = false;
     /**
-     * Define version of API interfaces
+     * Define version of API interfaces.
+     *
      * @var bool|string
      */
     private $version = false;
     /**
-     * Define access token
+     * Define access token.
+     *
      * @var bool|string
      */
     private $accessToken = false;
 
     /**
-     * Define secret for nohttps requests
+     * Define secret for nohttps requests.
+     *
      * @var bool|string
      */
     private $noHttpsSecret = false;
 
     /**
-     * Callable that used against every element in returning array
-     * @var bool|Callable
+     * Callable that used against every element in returning array.
+     *
+     * @var bool|callable
      */
     public $callback = false;
 
     /**
-     * Callable that used against every element in returning array if VkJs was used
-     * @var bool|Callable
+     * Callable that used against every element in returning array if VkJs was used.
+     *
+     * @var bool|callable
      */
     public $jsCallback = false;
 
     /**
-     * Set one param
+     * Set one param.
+     *
      * @param mixed $key
      * @param mixed $value
-     * @param bool $defaultValue
+     * @param bool  $defaultValue
+     *
      * @return $this
      */
     public function param($key, $value, $defaultValue = false)
@@ -70,8 +78,10 @@ class Core
     }
 
     /**
-     * Set many params
+     * Set many params.
+     *
      * @param array $data
+     *
      * @return $this
      */
     public function params(array $data)
@@ -84,8 +94,10 @@ class Core
     }
 
     /**
-     * Will set callback for element creation
+     * Will set callback for element creation.
+     *
      * @param Closure $callback
+     *
      * @return $this
      */
     public function createAs(Closure $callback)
@@ -96,9 +108,11 @@ class Core
     }
 
     /**
-     * API Request, will return RequestTransaction
-     * @param string $methodName
+     * API Request, will return RequestTransaction.
+     *
+     * @param string     $methodName
      * @param bool|array $args
+     *
      * @return Api|RequestTransaction
      */
     public function request($methodName, $args = false)
@@ -116,7 +130,7 @@ class Core
     }
 
     /**
-     * Clear current params
+     * Clear current params.
      */
     public function reset()
     {
@@ -124,23 +138,29 @@ class Core
     }
 
     /**
-     * Set necessary arguments
+     * Set necessary arguments.
+     *
      * @return array
      */
     private function systemArgs()
     {
         $array = [];
 
-        if($this->lang)
+        if ($this->lang) {
             $array['lang'] = $array;
-        if($this->version)
+        }
+        if ($this->version) {
             $array['v'] = $this->version;
+        }
+
         return $array;
     }
 
     /**
-     * Set's token
+     * Set's token.
+     *
      * @param string $accessToken
+     *
      * @return $this
      */
     public function setToken($accessToken)
@@ -151,8 +171,10 @@ class Core
     }
 
     /**
-     * Sets nohttps secret
+     * Sets nohttps secret.
+     *
      * @param string $noHttpsSecret
+     *
      * @return $this
      */
     public function setNoHttpsSecret($noHttpsSecret)
@@ -165,17 +187,21 @@ class Core
     public function setLang($lang)
     {
         $this->lang = $lang;
+
         return $this;
     }
 
     /**
-     * Set's api version
+     * Set's api version.
+     *
      * @param string $version
+     *
      * @return $this
      */
     public function apiVersion($version)
     {
         $this->version = $version;
+
         return $this;
     }
 
@@ -185,7 +211,8 @@ class Core
     public static $instance;
 
     /**
-     * We want same instance
+     * We want same instance.
+     *
      * @return Core
      */
     public static function getInstance()

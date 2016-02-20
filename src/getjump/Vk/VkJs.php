@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 04.05.14
- * Time: 13:47
+ * Time: 13:47.
  */
-
 namespace getjump\Vk;
 
 use getjump\Vk\Response\Api;
@@ -13,40 +12,43 @@ use stdClass;
 
 /**
  * Class VkJs
- * Used to construct pseudo JavaScript
- * @package getjump\Vk
+ * Used to construct pseudo JavaScript.
  */
 class VkJs
 {
-
     /**
-     * Will contain pseudo JavaScript
+     * Will contain pseudo JavaScript.
+     *
      * @var bool|string
      */
     public $dataString = false;
 
     /**
-     * Here we store instances of requests
+     * Here we store instances of requests.
+     *
      * @var bool|array
      */
     private $requests = false;
 
     /**
-     * Instance of Core class
+     * Instance of Core class.
+     *
      * @var bool|Core
      */
     private $vk = false;
 
     /**
-     * Callable that used against every element in returning array
+     * Callable that used against every element in returning array.
+     *
      * @var bool
      */
     private $callback = false;
 
     /**
-     * Just a constructor
-     * @param Core $vk
-     * @param string $methodName
+     * Just a constructor.
+     *
+     * @param Core       $vk
+     * @param string     $methodName
      * @param bool|array $args
      */
     public function __construct(Core $vk, $methodName, $args = false)
@@ -60,11 +62,12 @@ class VkJs
         if ($vk instanceof Core) {
             $this->vk = $vk;
         }
-        $this->dataString = sprintf("API.%s({%s})", $methodName, implode(', ', $arg));
+        $this->dataString = sprintf('API.%s({%s})', $methodName, implode(', ', $arg));
     }
 
     /**
-     * We wanna send our current VkJs to Vk execute
+     * We wanna send our current VkJs to Vk execute.
+     *
      * @return RequestTransaction|Api
      */
     public function execute()
@@ -72,9 +75,9 @@ class VkJs
         $execute = $this->dataString;
         if ($this->requests) {
             foreach ($this->requests as $request) {
-                $execute .= ',' . $request->dataString;
+                $execute .= ','.$request->dataString;
             }
-            $execute = '[' . $execute . ']';
+            $execute = '['.$execute.']';
 
             if (!$this->callback && !$this->vk->jsCallback) {
                 $this->vk->jsCallback = true;
@@ -83,6 +86,7 @@ class VkJs
                 $this->callback = function ($data) use (&$oldCallback) {
                     $std = new stdClass();
                     $std->response = $data;
+
                     return new Api($std, $oldCallback);
                 };
 
@@ -94,8 +98,10 @@ class VkJs
     }
 
     /**
-     * Method will append one VkJs object, to another one
+     * Method will append one VkJs object, to another one.
+     *
      * @param VkJs $js
+     *
      * @return $this
      */
     public function append(VkJs $js)

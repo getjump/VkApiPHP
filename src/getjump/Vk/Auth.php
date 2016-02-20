@@ -3,8 +3,7 @@
 namespace getjump\Vk;
 
 /**
- * Class Auth
- * @package getjump\Vk
+ * Class Auth.
  */
 class Auth
 {
@@ -38,6 +37,7 @@ class Auth
 
     /**
      * @param string $id
+     *
      * @return $this
      */
     public function setAppId($id)
@@ -57,6 +57,7 @@ class Auth
 
     /**
      * @param string $secret
+     *
      * @return $this
      */
     public function setSecret($secret)
@@ -76,6 +77,7 @@ class Auth
 
     /**
      * @param string $uri
+     *
      * @return $this
      */
     public function setRedirectUri($uri)
@@ -87,6 +89,7 @@ class Auth
 
     /**
      * @param $scope
+     *
      * @return $this
      */
     public function setScope($scope)
@@ -98,6 +101,7 @@ class Auth
 
     /**
      * @param $v
+     *
      * @return $this
      */
     public function setVersion($v)
@@ -116,8 +120,10 @@ class Auth
     }
 
     /**
-     * Just an alias, for an array
+     * Just an alias, for an array.
+     *
      * @param $d
+     *
      * @return mixed
      */
     public function g($d)
@@ -126,7 +132,8 @@ class Auth
     }
 
     /**
-     * Will return token if everything is OK
+     * Will return token if everything is OK.
+     *
      * @return \getjump\Vk\Response\Auth|bool|string
      */
     public function startCallback()
@@ -143,8 +150,10 @@ class Auth
     }
 
     /**
-     * Method converts code to token
+     * Method converts code to token.
+     *
      * @param $code
+     *
      * @return \getjump\Vk\Response\Auth|bool
      */
     public function getToken($code)
@@ -177,6 +186,6 @@ class Auth
      */
     public static function getInstance()
     {
-        return new self;
+        return new self();
     }
 }

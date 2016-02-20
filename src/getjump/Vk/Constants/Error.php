@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 07.05.2014
- * Time: 17:21
+ * Time: 17:21.
  */
-
 namespace getjump\Vk\Constants;
-
 
 class Error
 {

@@ -3,27 +3,26 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 02.05.14
- * Time: 16:51
+ * Time: 16:51.
  */
-
 namespace getjump\Vk\Model;
 
 /**
  * Class BaseModel
- * Your models for data interpreting should extends this class
- * @package getjump\Vk\Model
+ * Your models for data interpreting should extends this class.
  */
 class BaseModel
 {
-
     /**
-     * Here we will store real data
+     * Here we will store real data.
+     *
      * @var
      */
     private $data;
 
     /**
-     * Just a constructor
+     * Just a constructor.
+     *
      * @param $data
      */
     public function __construct($data)
@@ -32,8 +31,10 @@ class BaseModel
     }
 
     /**
-     * We are overriding get, so data will pulling from data array
+     * We are overriding get, so data will pulling from data array.
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function __get($name)
@@ -42,9 +43,10 @@ class BaseModel
     }
 
     /**
-     * We are overriding set, so data will writing to data array
+     * We are overriding set, so data will writing to data array.
+     *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($name, $value)
     {
@@ -52,8 +54,10 @@ class BaseModel
     }
 
     /**
-     * We are overriding isset, so data will querying in data array
+     * We are overriding isset, so data will querying in data array.
+     *
      * @param string $name
+     *
      * @return bool
      */
     public function __isset($name)

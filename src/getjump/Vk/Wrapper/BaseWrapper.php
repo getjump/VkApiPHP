@@ -7,7 +7,6 @@ use getjump\Vk\Core;
 /**
  * Class BaseWrapper
  * Your Wrappers should extends this class as part of architecture.
- * @package getjump\Vk\Wrapper
  */
 class BaseWrapper
 {

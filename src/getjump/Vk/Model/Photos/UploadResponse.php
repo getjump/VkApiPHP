@@ -2,7 +2,6 @@
 
 namespace getjump\Vk\Model\Photos;
 
-
 use getjump\Vk\Model\BaseModel;
 
 class UploadResponse extends BaseModel
