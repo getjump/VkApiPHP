@@ -1,7 +1,7 @@
 # Vk API PHP
 
 [![Build Status](https://travis-ci.org/getjump/VkApiPHP.svg?branch=master)](https://travis-ci.org/getjump/VkApiPHP)
-[![Code Style Status](https://styleci.io/repos/19418792/shield)[https://styleci.io/repos/19418792]
+[![Code Style Status](https://styleci.io/repos/19418792/shield)](https://styleci.io/repos/19418792)
 
 That library will help you organize your work with API Vk.com
 
