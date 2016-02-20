@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 10.05.2014
- * Time: 12:53
+ * Time: 12:53.
  */
-
 namespace getjump\Vk\Constants;
 
 class UserFields

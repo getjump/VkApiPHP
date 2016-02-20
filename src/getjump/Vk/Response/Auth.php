@@ -2,9 +2,8 @@
 
 namespace getjump\Vk\Response;
 
-
-class Auth {
-
+class Auth
+{
     public $token = false;
     public $expiresIn = false;
     public $userId = false;
@@ -15,4 +14,4 @@ class Auth {
         $this->expiresIn = $expiresIn;
         $this->userId = $userId;
     }
-} 
+}

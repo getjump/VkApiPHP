@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 07.05.14
- * Time: 13:48
+ * Time: 13:48.
  */
-
 namespace getjump\Vk\Constants;
-
 
 class Permissions
 {

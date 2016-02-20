@@ -3,21 +3,19 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 07.05.14
- * Time: 13:46
+ * Time: 13:46.
  */
-
 namespace getjump\Vk\Wrapper;
-
 
 /**
  * Class Account
- * Account wrapper
- * @package getjump\Vk\Wrapper
+ * Account wrapper.
  */
 class Account extends BaseWrapper
 {
     /**
-     * Returns current app permission
+     * Returns current app permission.
+     *
      * @return array|bool|mixed
      */
     public function getAppPermissions()
@@ -26,9 +24,11 @@ class Account extends BaseWrapper
     }
 
     /**
-     * Used to validate rights
+     * Used to validate rights.
+     *
      * @param $permissions
      * @param int|array $bitmask
+     *
      * @return int
      */
     public function validateRights($permissions, $bitmask = 0)
@@ -41,6 +41,7 @@ class Account extends BaseWrapper
         } else {
             $valid = $permissions & $bitmask;
         }
+
         return $valid;
     }
 }

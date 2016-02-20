@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 02.05.14
- * Time: 17:19
+ * Time: 17:19.
  */
-
 namespace getjump\Vk\Wrapper;
 
 use getjump\Vk\Model\User;
@@ -14,15 +13,16 @@ use getjump\Vk\Response\Api;
 
 /**
  * Class Friends
- * Implements some logic for API part that working with friends
- * @package getjump\Vk\Wrapper
+ * Implements some logic for API part that working with friends.
  */
 class Friends extends BaseWrapper
 {
     /**
-     * Return friends of a user with $userId
+     * Return friends of a user with $userId.
+     *
      * @param int|string $userId
-     * @param bool $fields
+     * @param bool       $fields
+     *
      * @return Api|RequestTransaction
      */
     public function get($userId, $fields = false)
@@ -38,14 +38,17 @@ class Friends extends BaseWrapper
 
     /**
      * @param $data
+     *
      * @return null|string
+     *
      * @todo Put this to another place (duplicate with User)
      */
     public function fieldsToString($data)
     {
         if (!$data) {
-            return null;
+            return;
         }
+
         return implode(',', $data);
     }
 }

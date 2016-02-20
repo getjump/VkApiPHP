@@ -1,9 +1,9 @@
 <?php
+
 namespace getjump\Vk\Response;
 
 /**
- * Class Api
- * @package getjump\Vk\Response
+ * Class Api.
  */
 class Api
 {
@@ -27,7 +27,8 @@ class Api
     }
 
     /**
-     * Execute callable on every element of array
+     * Execute callable on every element of array.
+     *
      * @param bool|callable $callback
      */
     public function each($callback = false)
@@ -36,7 +37,8 @@ class Api
     }
 
     /**
-     * Try to get one element
+     * Try to get one element.
+     *
      * @return mixed
      */
     public function one()
@@ -45,9 +47,11 @@ class Api
     }
 
     /**
-     * Magic method for calling functions on api response
+     * Magic method for calling functions on api response.
+     *
      * @param $name
      * @param $arguments
+     *
      * @return mixed
      */
     public function __call($name, $arguments)
@@ -56,8 +60,10 @@ class Api
     }
 
     /**
-     * Magic method for accessing api response
+     * Magic method for accessing api response.
+     *
      * @param $name
+     *
      * @return bool
      */
     public function __get($name)
@@ -66,7 +72,8 @@ class Api
     }
 
     /**
-     * Return ApiResponse
+     * Return ApiResponse.
+     *
      * @return array|bool
      */
     public function getResponse()

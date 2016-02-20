@@ -1,4 +1,5 @@
 <?php
+
 namespace getjump\Vk\Wrapper;
 
 use getjump\Vk\Constants\LongPolling as LP;
@@ -7,7 +8,6 @@ use getjump\Vk\Model;
 /**
  * Class LongPoll
  * Implements LongPolling part of API.
- * @package getjump\Vk\Wrapper
  */
 class LongPoll extends BaseWrapper
 {
@@ -18,8 +18,10 @@ class LongPoll extends BaseWrapper
     public $userMap = [];
 
     /**
-     * Return connection info for long polling
+     * Return connection info for long polling.
+     *
      * @param $d
+     *
      * @return string
      */
     public function getConnectionInfo($d)
@@ -28,7 +30,8 @@ class LongPoll extends BaseWrapper
     }
 
     /**
-     * Get connection info for long polling from api
+     * Get connection info for long polling from api.
+     *
      * @return array|bool
      */
     public function getServerData()
@@ -37,7 +40,8 @@ class LongPoll extends BaseWrapper
     }
 
     /**
-     * LongPoll loop
+     * LongPoll loop.
+     *
      * @todo make something other than putting data to STDOUT
      */
     public function doLoop()
@@ -50,13 +54,13 @@ class LongPoll extends BaseWrapper
         $userMap = [];
         $userCache = [];
 
-        /**
+        /*
          * @param $id
          * @return Model\User
          */
         $fetchData = function ($id) use ($user, &$userMap, &$userCache) {
             if (!isset($userMap[$id])) {
-                $userMap[$id] = sizeof($userCache);
+                $userMap[$id] = count($userCache);
                 $userCache[] = $user->get($id)->response->get();
             }
 
@@ -68,7 +72,7 @@ class LongPoll extends BaseWrapper
             $initial = $this->getConnectionInfo($server);
 
             foreach ($data->updates as $update) {
-                /**
+                /*
                  * @var $user Model\User
                  */
                 switch ($update[0]) {
@@ -88,7 +92,7 @@ class LongPoll extends BaseWrapper
                         break;
                     case LP::FRIEND_OFFLINE:
                         $user = $fetchData($update[1] * -1);
-                        $status = $update[2] == 1 ? "AFK" : "Exit";
+                        $status = $update[2] == 1 ? 'AFK' : 'Exit';
                         printf("User %s offline(%s)\n", $user->getName(), $status);
                         break;
                     case LP::FRIEND_ONLINE:

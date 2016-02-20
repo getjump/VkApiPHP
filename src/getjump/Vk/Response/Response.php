@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 02.05.14
- * Time: 16:25
+ * Time: 16:25.
  */
-
 namespace getjump\Vk\Response;
 
 use Closure;
 
 /**
- * Class Response
- * @package getjump\Vk\Response
+ * Class Response.
  */
 class Response implements \ArrayAccess, \Countable, \Iterator
 {
@@ -23,7 +21,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     public $count = false;
 
     /**
-     * They can return just an response array
+     * They can return just an response array.
      *
      * @var bool|array
      */
@@ -33,16 +31,17 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     private $extendedFields = [];
 
     /**
-     * Response constructor
+     * Response constructor.
+     *
      * @param $data
      * @param bool|Closure $callback
      */
     public function __construct($data, $callback = false)
     {
-        foreach($data as $key => $value)
-        {
-            if(property_exists($this, $key))
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
                 continue;
+            }
 
             $this->{$key} = $value;
             $this->extendedFields[] = $key;
@@ -57,7 +56,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         }
         $this->count = !isset($data->count) ? false : $data->count;
         if (is_array($data) || !isset($data->items)) {
-            $this->count = sizeof($data);
+            $this->count = count($data);
             if (is_array($data) && is_callable($callback)) {
                 foreach ($data as $d) {
                     $this->data[] = call_user_func_array($callback, [$d]);
@@ -68,19 +67,21 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         }
 
         // TODO: Avoid hack
-        if($this->data)
+        if ($this->data) {
             $this->items = &$this->data;
-        if($this->items)
+        }
+        if ($this->items) {
             $this->data = &$this->items;
+        }
 
-        if(is_object($data) && is_callable($callback))
-        {
+        if (is_object($data) && is_callable($callback)) {
             $this->data = call_user_func_array($callback, [$data]);
         }
     }
 
     /**
-     * This method takes Closure as argument, so every element from response will go into this Closure
+     * This method takes Closure as argument, so every element from response will go into this Closure.
+     *
      * @param Closure $callback
      */
     public function each(Closure $callback)
@@ -89,15 +90,17 @@ class Response implements \ArrayAccess, \Countable, \Iterator
             return;
         }
         $data = [];
-        $this->items ? $data = & $this->items : (!$this->data ? : $data = & $this->data);
+        $this->items ? $data = &$this->items : (!$this->data ?: $data = &$this->data);
         foreach ($data as $k => $v) {
             call_user_func_array($callback, [$k, $v]);
         }
     }
 
     /**
-     * This method will return one element if id is not specified or element of array otherwise
+     * This method will return one element if id is not specified or element of array otherwise.
+     *
      * @param bool|int $id
+     *
      * @return mixed
      */
     public function get($id = false)
@@ -105,7 +108,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         if (!$id) {
             if (is_array($this->data)) {
                 return $this->data[0];
-            } elseif(isset($this->items) && $this->items !== false) {
+            } elseif (isset($this->items) && $this->items !== false) {
                 return $this->items[0];
             } else {
                 return $this->data;
@@ -119,25 +122,25 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     {
         $temp = [];
 
-        foreach($this->extendedFields as $key)
-        {
+        foreach ($this->extendedFields as $key) {
             $temp[$key] = $this->{$key};
         }
 
-        return (object)$temp;
+        return (object) $temp;
     }
 
     /**
-     * This magic method try to return field from response
+     * This magic method try to return field from response.
+     *
      * @param $name
+     *
      * @return bool
      */
     public function __get($name)
     {
         if (!is_array($this->data)) {
             return $this->data->{$name};
-        } elseif(sizeof($this->data) == 0 && is_object($this->data[0]))
-        {
+        } elseif (count($this->data) == 0 && is_object($this->data[0])) {
             return $this->data[0]->{$name};
         }
 
@@ -145,7 +148,8 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     }
 
     /**
-     * Just wrap over Response->get()
+     * Just wrap over Response->get().
+     *
      * @return mixed
      */
     public function one()
@@ -154,7 +158,8 @@ class Response implements \ArrayAccess, \Countable, \Iterator
     }
 
     /**
-     * This method return raw Response->data
+     * This method return raw Response->data.
+     *
      * @return array|bool
      */
     public function getResponse()

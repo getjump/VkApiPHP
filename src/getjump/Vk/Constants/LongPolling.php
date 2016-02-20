@@ -2,7 +2,6 @@
 
 namespace getjump\Vk\Constants;
 
-
 class LongPolling
 {
     const
