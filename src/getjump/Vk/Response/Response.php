@@ -38,7 +38,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
      */
     public function __construct($data, $callback = false)
     {
-        if(!is_array($data)) {
+        if(is_string($data)) {
             return $this->data = $data;
         }
         
