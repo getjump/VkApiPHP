@@ -38,6 +38,10 @@ class Response implements \ArrayAccess, \Countable, \Iterator
      */
     public function __construct($data, $callback = false)
     {
+        if(!is_array($data)) {
+            return $this->data = $data;
+        }
+        
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 continue;
