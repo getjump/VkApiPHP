@@ -157,8 +157,8 @@ class RequestTransaction
             $args['sig'] = md5('/method/'.$this->methodName.'?'.http_build_query($args).$this->noHttpsSecret);
         }
 
-        $data = $this->guzzle->post(self::URL_VK_API.$this->methodName, ['body' => $args])->json(['object' => true]);
-        $c = new Api($data, $this->callback);
+        $data = $this->guzzle->post(self::URL_VK_API.$this->methodName, ['form_params' => $args])->getBody()->getContents();
+        $c = new Api(json_decode($data), $this->callback);
 
         return $c;
     }

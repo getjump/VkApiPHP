@@ -1,5 +1,5 @@
 {
-    "name": "getjump/vk",
+    "name": "den67rus/vk",
     "description": "Library for work with API Vk.com",
     "keywords": ["php", "vk", "api", "library", "vkontakte"],
     "license": "MIT",
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "4.*",
+        "guzzlehttp/guzzle": "6.*",
         "php": ">=5.4.0"
     },
     "require-dev": {
