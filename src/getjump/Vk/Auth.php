@@ -170,7 +170,8 @@ class Auth
             urlencode($this->g('redirect_uri'))
         );
 
-        $data = $this->guzzle->get($uri)->json(['object' => true]);
+        $data = $this->guzzle->get($uri)->getBody();
+        $data = json_decode($data);
 
         if (isset($data->access_token)) {
             return new \getjump\Vk\Response\Auth($data->access_token, $data->expires_in, $data->user_id);
