@@ -3,7 +3,6 @@
  * Created by PhpStorm.
  * User: getju_000
  * Date: 03.05.14
- * Time: 12:19.
  */
 namespace getjump\Vk;
 
@@ -157,7 +156,8 @@ class RequestTransaction
             $args['sig'] = md5('/method/'.$this->methodName.'?'.http_build_query($args).$this->noHttpsSecret);
         }
 
-        $data = $this->guzzle->post(self::URL_VK_API.$this->methodName, ['body' => $args])->json(['object' => true]);
+        $data = $this->guzzle->post(self::URL_VK_API . $this->methodName, ['form_params' => $args])->getBody();
+        $data = json_decode($data);
         $c = new Api($data, $this->callback);
 
         return $c;
