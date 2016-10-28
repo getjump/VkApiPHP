@@ -16,7 +16,7 @@ You can get library and all of it dependencies through [composer](https://getcom
 Okay, that is how we can instantiate main object for our future requests
 
 ```php
-$vk = getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR TOKENS GOES <<<);
+$vk = \getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR TOKENS GOES <<<);
 ```
 
 >YOU CAN GET SOME TOKENS AT : 
@@ -26,9 +26,9 @@ $vk = getjump\Vk\Core::getInstance()->apiVersion('5.5')->setToken(>>> HERE YOUR 
 If you wanna use site authorization, look at next snippet:
 
 ```php
-$vk = getjump\Vk\Core::getInstance()->apiVersion('5.5');
+$vk = \getjump\Vk\Core::getInstance()->apiVersion('5.5');
 
-$auth = getjump\Vk\Auth::getInstance();
+$auth = \getjump\Vk\Auth::getInstance();
 $auth->setAppId('3470411')->setScope('SCOPE')->setSecret('SECRET CODE')->setRedirectUri('http://localhost/test.php'); // SETTING ENV
 $token=$auth->startCallback(); // Here we will have token, if everything okay
 
@@ -51,14 +51,14 @@ $vk->request('friends.get', ['user_id' => '15157875'])->each(function($i, $v) {}
 That us long polling shiet, it works like a hell, as fast as you can see.
 ```php
 // Long pooling loop
-$lp = new getjump\Vk\Wrapper\LongPoll($vk);
+$lp = new \getjump\Vk\Wrapper\LongPoll($vk);
 $lp->doLoop();
 ```
 
 We will do badass stuff, like kiss. You can do like the following and it will works
 ```php
 //KISS
-$user=new getjump\Vk\Wrapper\User(getjump\Vk\Core::getInstance()->apiVersion('5.5'));
+$user=new \getjump\Vk\Wrapper\User(\getjump\Vk\Core::getInstance()->apiVersion('5.5'));
 $user->get(1, 'photo_max_orig, sex'); //It will contain RequestTransaction, and will wait for your action, like getting response ->response or calling ->each(callback)
 //Since __get and __call are overrided, we will request for a data, only when it neeeded
 ```
@@ -66,7 +66,7 @@ $user->get(1, 'photo_max_orig, sex'); //It will contain RequestTransaction, and 
 We can use my own sakhalin technilogies and take all the stuff that VK have for that request using generators
 ```php
 // Friends gets
-$friends = new getjump\Vk\Wrapper\Friends($vk);
+$friends = new \getjump\Vk\Wrapper\Friends($vk);
 foreach($friends->get(15157875, 'first_name, last_name')->batch(100) as $f) //BATCH MEAN $f WILL CONTAIN JUST 100 ELEMENTS, AND REQUEST WILL MADE FOR 100 ELEMENTS
 {
     /**
