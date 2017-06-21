@@ -7,7 +7,7 @@ namespace getjump\Vk;
  */
 class Auth
 {
-    const URL_ACCESS_TOKEN = 'https://oauth.vk.com/access_token?client_id=%s&client_secret=%s&code=%s&redirect_uri=%s';
+    const URL_ACCESS_TOKEN = 'https://oauth.vk.com/access_token?';
 
     /**
      * @var \GuzzleHttp\Client
@@ -100,6 +100,18 @@ class Auth
     }
 
     /**
+     * @param $state
+     *
+     * @return $this
+     */
+    public function setState($state)
+    {
+        $this->options['state'] = $state;
+
+        return $this;
+    }
+
+    /**
      * @param $v
      *
      * @return $this
@@ -162,13 +174,20 @@ class Auth
             $this->guzzle = new \GuzzleHttp\Client();
         }
 
-        $uri = sprintf(
-            self::URL_ACCESS_TOKEN,
-            $this->g('client_id'),
-            $this->g('client_secret'),
-            $code,
-            urlencode($this->g('redirect_uri'))
-        );
+
+        $params = [
+            'client_id' => $this->g('client_id'),
+            'client_secret' => $this->g('client_secret'),
+            'code' => $code,
+            'redirect_uri' => $this->g('redirect_uri'),
+            'state' => $this->g('state'),
+        ];
+
+        $params = array_filter($params, function ($value) {
+            return strlen($value) > 0;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $uri = self::URL_ACCESS_TOKEN . http_build_query($params);
 
         $data = $this->guzzle->get($uri)->getBody();
         $data = json_decode($data);
