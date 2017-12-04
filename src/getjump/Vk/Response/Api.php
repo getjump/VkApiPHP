@@ -22,7 +22,15 @@ class Api
      */
     public function __construct($data, $callback = false)
     {
-        $this->response = !isset($data->response) ? false : new Response($data->response, $callback);
+        if (!isset($data->response)) {
+            $this->response = false;
+        } else {
+            if (!is_object($data->response) && !is_array($data->response)) {
+                $this->response =  new Response($data, $callback);
+            } else {
+                $this->response =  new Response($data->response, $callback);
+            }
+        }
         $this->error = !isset($data->error) ? false : new Error($data->error);
     }
 
