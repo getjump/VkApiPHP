@@ -56,7 +56,7 @@ class Response implements \ArrayAccess, \Countable, \Iterator
         }
         $this->count = !isset($data->count) ? false : $data->count;
         if (is_array($data) || !isset($data->items)) {
-            $this->count = count($data);
+            $this->count = (is_array($data) || $data instanceof  \Countable) ? count($data) : false;
             if (is_array($data) && is_callable($callback)) {
                 foreach ($data as $d) {
                     $this->data[] = call_user_func_array($callback, [$d]);
